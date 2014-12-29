@@ -17,18 +17,6 @@
 
 @implementation StateView
 
--(instancetype)initWithTarget:(id)target selector:(SEL)selector {
-    
-    self = [super init];
-    if(self) {
-        
-        [self addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
-        
-    }
-    return self;
-    
-}
-
 //Update the stateView by changing it's state
 -(void)setSMstate:(State *)SMstate {
     

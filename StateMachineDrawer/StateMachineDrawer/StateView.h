@@ -11,8 +11,6 @@
 
 @interface StateView : StateMachineComponentView
 
--(instancetype)initWithTarget:(id)target selector:(SEL)selector;
-
 -(void)setSMstate:(State*)SMstate; //Update the stateView by changing it's state
 
 @property(nonatomic) State *SMstate;

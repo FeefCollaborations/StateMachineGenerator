@@ -14,37 +14,55 @@
 
 @property(nonatomic)StateView *selectedStateView;
 @property(nonatomic)NSMutableArray *stateViews;
-@property(nonatomic)UIButton *backgroundButton;
+@property BOOL panSelected;
 
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
-    self.backgroundButton = [[UIButton alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:self.backgroundButton];
-    [self.backgroundButton addTarget:self action:@selector(backgroundButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [super viewDidLoad];
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPressRecognized:)];
+    UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognized:)];
+
     lpgr.delegate = self;
+    
     [self.view addGestureRecognizer:lpgr];
+    [self.view addGestureRecognizer:tgr];
+    [self.view addGestureRecognizer:pgr];
+    
 }
 
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
 
-    [self deselectSelectedStateView];
-    self.selectedStateView = [[StateView alloc] initWithTarget:self selector:@selector(pressedStateViewButton:)];
-    [self.selectedStateView setSMstate:[[State alloc] initWithCenter:[gestureRecognizer locationInView:self.view]]];
-    [self.view addSubview:self.selectedStateView];
-    [self.stateViews addObject:self.selectedStateView];
+    if([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]])
+    {
+        [self deselectSelectedStateView];
+        self.selectedStateView = [StateView new];
+        [self.selectedStateView addTarget:self action:@selector(pressedDownOnStateView:) forControlEvents:UIControlEventTouchDown];
+        [self.selectedStateView addTarget:self action:@selector(pressedUpOnViewButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.selectedStateView setSMstate:[[State alloc] initWithCenter:[gestureRecognizer locationInView:self.view]]];
+        [self.view addSubview:self.selectedStateView];
+        [self.stateViews addObject:self.selectedStateView];
+    }
     return YES;
     
 }
 
--(void)pressedStateViewButton:(StateView*)stateView {
+-(void)pressedDownOnStateView:(StateView*)stateView {
+    
+    if([stateView isEqual:self.selectedStateView]) {
+        
+        self.panSelected = YES;
+        
+    }
+    
+}
+
+-(void)pressedUpOnViewButton:(StateView*)stateView {
     
     [self deselectSelectedStateView];
     self.selectedStateView = stateView;
@@ -52,17 +70,14 @@
     
 }
 
--(void)backgroundButtonPressed {
-    
-    [self deselectSelectedStateView];
-    
-}
-
 -(void)deselectSelectedStateView {
     
     if(self.selectedStateView) {
+        
         [self.selectedStateView setStrokeColor:[UIColor blackColor]];
         self.selectedStateView = nil;
+        self.panSelected = NO;
+        
     }
     
 }
@@ -73,9 +88,20 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)tapPressRecognized:(UITapGestureRecognizer*)tgr {
+    
+    [self deselectSelectedStateView];
+    
+}
+
+-(void)panRecognized:(UIPanGestureRecognizer*)pgr {
+    
+    if(self.panSelected) {
+        
+        self.selectedStateView.SMstate.center = [pgr locationInView:self.view];
+        
+    }
+    
 }
 
 @end
