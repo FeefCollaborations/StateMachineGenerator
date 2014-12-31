@@ -10,10 +10,18 @@
 #import "State.h"
 #import "Transition.h"
 
+@protocol StateObserverDelegate <NSObject>
+
+-(void)stateDidChange:(State*)state;
+
+@end
+
 @interface StateObserver : NSObject
 
--(instancetype)initWithTarget:(StateMachineComponentView*)target;
+-(instancetype)initWithDelegate:(id<StateObserverDelegate>)delegate fieldsToObserve:(NSArray*)fields;
 -(void)add:(BOOL)add observersForState:(State*)state;
 -(void)add:(BOOL)add observersForTransition:(Transition*)transition;
+
+@property(nonatomic,weak)id delegate;
 
 @end

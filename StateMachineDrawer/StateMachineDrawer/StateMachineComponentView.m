@@ -10,27 +10,9 @@
 
 @implementation StateMachineComponentView
 
-@synthesize strokeColor;
-
 -(void)updateView {
     
     [NSException raise:@"Subclassing error" format:@"Subclasses must overwrite the %s function", __FUNCTION__];
-    
-}
-
--(UIColor *)strokeColor {
-    
-    if(!strokeColor) {
-        strokeColor = [UIColor blackColor];
-    }
-    return strokeColor;
-    
-}
-
--(void)setStrokeColor:(UIColor *)color {
-    
-    strokeColor = color;
-    [self updateView];
     
 }
 

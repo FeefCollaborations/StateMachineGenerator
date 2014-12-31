@@ -16,3 +16,32 @@
 @property(nonatomic) State *SMstate;
 
 @end
+
+#warning PUT THIS INSIDE THE TRANSITION VIEW IMPLEMENTATION FILE
+
+/*
+ //Lazy load the stateObserver
+ -(StateObserver *)stateObserver
+ {
+ 
+ if(!_stateObserver) {
+ _stateObserver = [[StateObserver alloc] initWithDelegate:self fieldsToObserve:@[@"frame",@"color",@"fromState",@"toState"]];
+ }
+ return _stateObserver;
+ 
+ }
+ 
+ -(void)stateDidChange:(State *)state {
+ 
+ if([state isEqual:self.fromState]) {
+ //From state has changed
+ self.fromState = state;
+ }
+ else {
+ //To state has changed
+ self.toState = state;
+ }
+ [self setNeedsDisplay];
+ 
+ }
+ */

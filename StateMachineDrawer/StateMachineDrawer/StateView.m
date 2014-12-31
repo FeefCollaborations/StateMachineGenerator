@@ -9,9 +9,10 @@
 #import "StateView.h"
 #import "StateObserver.h"
 
-@interface StateView ()
+@interface StateView () <StateObserverDelegate>
 
 @property(nonatomic)StateObserver *stateObserver;
+@property(nonatomic)UIColor *priorDrawColor;
 
 @end
 
@@ -30,7 +31,6 @@
 //update the frame of the stateView and call "updateView" to draw the bezier path the first time
 -(void)setFrame:(CGRect)frame
 {
-    
     [super setFrame:frame];
     if(!CGRectEqualToRect(self.frame, CGRectZero)) {
         [self updateView];
@@ -38,24 +38,34 @@
     
 }
 
-//
+//redraws the bezier path encircling the text, updates the text and stroke color
 -(void)updateView {
     
-    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0);
-    
     CGRect frame = self.frame;
-    frame.origin = CGPointZero;
-    self.bezierPath = [UIBezierPath bezierPathWithOvalInRect:frame];
-    [self.strokeColor setStroke];
-    [self.bezierPath stroke];
+    if(!CGSizeEqualToSize(self.SMstate.frame.size,frame.size) || self.SMstate.color != self.priorDrawColor) {
+
+        UIGraphicsBeginImageContextWithOptions(frame.size, NO, 0);
+        
+        frame.origin = CGPointZero;
+        self.bezierPath = [UIBezierPath bezierPathWithOvalInRect:frame];
+        [self.SMstate.color setStroke];
+        [self.bezierPath stroke];
+        
+        [self setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateNormal];
+        
+        UIGraphicsEndImageContext();
+        
+        [self setTitleColor:self.SMstate.color forState:UIControlStateNormal];
+        
+        self.priorDrawColor = self.SMstate.color;
+        
+    }
     
-    [self setBackgroundImage:UIGraphicsGetImageFromCurrentImageContext() forState:UIControlStateNormal];
-    
-    UIGraphicsEndImageContext();
-    
-    [self setTitleColor:self.strokeColor forState:UIControlStateNormal];
-    [self setTitle:self.SMstate.title forState:UIControlStateNormal];
-    
+    if(![[self titleForState:UIControlStateNormal] isEqualToString:self.SMstate.title]) {
+        
+        [self setTitle:self.SMstate.title forState:UIControlStateNormal];
+        
+    }
 }
 
 #pragma mark - private methods
@@ -65,9 +75,16 @@
 {
     
     if(!_stateObserver) {
-        _stateObserver = [[StateObserver alloc] initWithTarget:self];
+        _stateObserver = [[StateObserver alloc] initWithDelegate:self fieldsToObserve:@[@"frame",@"color"]];
     }
     return _stateObserver;
+    
+}
+
+-(void)stateDidChange:(State *)state {
+    
+    self.frame = [state frame];
+    [self setNeedsDisplay];
     
 }
 

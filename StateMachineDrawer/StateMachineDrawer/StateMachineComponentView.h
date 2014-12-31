@@ -12,7 +12,6 @@
 
 -(void)updateView;
 
-@property(nonatomic)UIColor *strokeColor;
 @property(nonatomic)UIBezierPath *bezierPath;
 
 @end

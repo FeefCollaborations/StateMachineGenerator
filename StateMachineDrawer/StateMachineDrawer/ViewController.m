@@ -10,11 +10,26 @@
 #import "StateView.h"
 #import "TransitionView.h"
 
-@interface ViewController () <UIGestureRecognizerDelegate>
+#define UNSELECTED_STATE_COLOR [UIColor blackColor]
+#define SELECTED_STATE_COLOR [UIColor blueColor]
+
+typedef enum {
+    
+    StateEditOptionMove,
+    StateEditOptionRename,
+    StateEditOptionRecolor,
+    StateEditOptionDelete
+    
+} StateEditOption;
+
+@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
 
 @property(nonatomic)StateView *selectedStateView;
 @property(nonatomic)NSMutableArray *stateViews;
 @property BOOL panSelected;
+@property BOOL pressedInsideState;
+@property int createdStatesCount;
+@property(nonatomic) StateEditOption currentStateEditOption;
 
 @end
 
@@ -23,6 +38,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.createdStatesCount = 0;
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPressRecognized:)];
@@ -40,11 +57,17 @@
 
     if([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]])
     {
+        if(self.pressedInsideState)
+            return NO;
+        
         [self deselectSelectedStateView];
         self.selectedStateView = [StateView new];
         [self.selectedStateView addTarget:self action:@selector(pressedDownOnStateView:) forControlEvents:UIControlEventTouchDown];
         [self.selectedStateView addTarget:self action:@selector(pressedUpOnViewButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.selectedStateView setSMstate:[[State alloc] initWithCenter:[gestureRecognizer locationInView:self.view]]];
+        self.createdStatesCount++;
+        self.selectedStateView.SMstate.color = SELECTED_STATE_COLOR;
+        self.selectedStateView.SMstate.title = [NSString stringWithFormat:@"state #%i", self.createdStatesCount];
         [self.view addSubview:self.selectedStateView];
         [self.stateViews addObject:self.selectedStateView];
     }
@@ -54,6 +77,7 @@
 
 -(void)pressedDownOnStateView:(StateView*)stateView {
     
+    self.pressedInsideState = YES;
     if([stateView isEqual:self.selectedStateView]) {
         
         self.panSelected = YES;
@@ -66,7 +90,8 @@
     
     [self deselectSelectedStateView];
     self.selectedStateView = stateView;
-    stateView.strokeColor = [UIColor blueColor];
+    stateView.SMstate.color = SELECTED_STATE_COLOR;
+    self.pressedInsideState = NO;
     
 }
 
@@ -74,9 +99,8 @@
     
     if(self.selectedStateView) {
         
-        [self.selectedStateView setStrokeColor:[UIColor blackColor]];
+        self.selectedStateView.SMstate.color = UNSELECTED_STATE_COLOR;
         self.selectedStateView = nil;
-        self.panSelected = NO;
         
     }
     
@@ -84,13 +108,17 @@
 
 -(void)longPressRecognized:(UILongPressGestureRecognizer*)lpgr {
     
-    self.selectedStateView.SMstate.center = [lpgr locationInView:self.view];
-    
+    [self updateSelectedStateViewLocationFromGestureRecognizer:lpgr];
+ 
+    [self updateForStateCompletion:lpgr];
+
 }
 
 -(void)tapPressRecognized:(UITapGestureRecognizer*)tgr {
     
     [self deselectSelectedStateView];
+    
+    [self updateForStateCompletion:tgr];
     
 }
 
@@ -98,10 +126,51 @@
     
     if(self.panSelected) {
         
-        self.selectedStateView.SMstate.center = [pgr locationInView:self.view];
+        [self updateSelectedStateViewLocationFromGestureRecognizer:pgr];
         
     }
     
+    [self updateForStateCompletion:pgr];
+    
+}
+
+-(void)updateSelectedStateViewLocationFromGestureRecognizer:(UIGestureRecognizer*)gr {
+    
+    self.selectedStateView.SMstate.center = [gr locationInView:self.view];
+    
+}
+
+-(void)updateForStateCompletion:(UIGestureRecognizer*)gr {
+    
+    if(gr.state == UIGestureRecognizerStateCancelled ||
+       gr.state == UIGestureRecognizerStateEnded ||
+       gr.state == UIGestureRecognizerStateFailed) {
+        
+        //A new state was dropped into the view
+        self.pressedInsideState = NO;
+        self.panSelected = NO;
+        
+    }
+    
+}
+
+-(void)selectedStateEditOptionChanged:(UISegmentedControl*)segmentedControl {
+    
+    self.currentStateEditOption = (StateEditOption)segmentedControl.selectedSegmentIndex;
+    
+    if(self.currentStateEditOption == StateEditOptionDelete) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Sure?" message:[NSString stringWithFormat:@"You sure you want to delete \"%@\"?", self.selectedStateView.SMstate.title] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"YES", nil] show];
+        
+    }
+    
+}
+
+-(NSMutableArray *)stateViews
+{
+    if(!_stateViews)
+        _stateViews = [[NSMutableArray alloc] init];
+    return _stateViews;
 }
 
 @end
