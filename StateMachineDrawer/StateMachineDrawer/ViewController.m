@@ -99,9 +99,8 @@ typedef enum {
     
     if(self.selectedStateView) {
         
-        [self.selectedStateView.SMstate deleteState];
-        //self.selectedStateView.SMstate.color = UNSELECTED_STATE_COLOR;
-        //self.selectedStateView = nil;
+        self.selectedStateView.SMstate.color = UNSELECTED_STATE_COLOR;
+        self.selectedStateView = nil;
         
     }
     

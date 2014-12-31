@@ -1,0 +1,10 @@
+PODS:
+  - HMSideMenu (1.1.0)
+
+DEPENDENCIES:
+  - HMSideMenu
+
+SPEC CHECKSUMS:
+  HMSideMenu: 92a2b2cf545df3e0bfd147d16dda4ada548a42ea
+
+COCOAPODS: 0.35.0
