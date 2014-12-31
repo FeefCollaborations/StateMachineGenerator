@@ -18,7 +18,7 @@
 
 @interface StateObserver : NSObject
 
--(instancetype)initWithDelegate:(id<StateObserverDelegate>)delegate fieldsToObserve:(NSArray*)fields;
+-(instancetype)initWithDelegate:(id<StateObserverDelegate>)delegate;
 -(void)add:(BOOL)add observersForState:(State*)state;
 -(void)add:(BOOL)add observersForTransition:(Transition*)transition;
 

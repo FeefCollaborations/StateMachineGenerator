@@ -75,13 +75,20 @@
 {
     
     if(!_stateObserver) {
-        _stateObserver = [[StateObserver alloc] initWithDelegate:self fieldsToObserve:@[@"frame",@"color"]];
+        _stateObserver = [[StateObserver alloc] initWithDelegate:self];
     }
     return _stateObserver;
     
 }
 
 -(void)stateDidChange:(State *)state {
+    
+    if(state.markedForDeletion) {
+        
+        [self removeFromSuperview];
+        return;
+        
+    }
     
     self.frame = [state frame];
     [self setNeedsDisplay];

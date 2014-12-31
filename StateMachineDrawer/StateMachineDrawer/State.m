@@ -40,7 +40,15 @@
 //delete the state and all it's transitions
 -(void)deleteState {
     
+    self.markedForDeletion = YES;
+    
     [[StateManager sharedInstance] removeState:self];
+    
+    for (Transition *transition in self.transitions.allValues) {
+        
+        //[transition deleteTransition];
+        
+    }
     
     //Send notification so all states with transitions heading to this state will be deleted
     [[NSNotificationCenter defaultCenter] postNotificationName:STATE_DELETED_NOTIFICATION_KEY object:self.id];
@@ -58,7 +66,7 @@
 -(void)addTransitionToState:(State*)state {
     
     Transition *transition = [[Transition alloc] initWithFromState:self toState:state];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recievedStateDeletionNotification:) name:STATE_DELETED_NOTIFICATION_KEY object:transition];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recievedStateDeletionNotification:) name:STATE_DELETED_NOTIFICATION_KEY object:state];
     [self.transitions setObject:transition forKey:state.id];
     
 }
@@ -115,7 +123,13 @@
 //Respond to state deletion notification
 -(void)recievedStateDeletionNotification:(NSNotification*)notification {
     
-    [self.transitions removeObjectForKey:notification.object];
+    Transition *transition = [self.transitions objectForKey:notification.object];
+    if(transition) {
+        
+        //[transition deleteTransition];
+        [self.transitions removeObjectForKey:notification.object];
+        
+    }
     
 }
 

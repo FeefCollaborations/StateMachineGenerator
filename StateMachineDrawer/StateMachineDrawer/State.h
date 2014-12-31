@@ -28,5 +28,6 @@
 @property(nonatomic) CGPoint center;
 @property(nonatomic) UIColor *color;
 @property(nonatomic) NSString *title;
+@property BOOL markedForDeletion;
 
 @end

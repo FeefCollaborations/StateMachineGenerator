@@ -25,7 +25,7 @@
  {
  
  if(!_stateObserver) {
- _stateObserver = [[StateObserver alloc] initWithDelegate:self fieldsToObserve:@[@"frame",@"color",@"fromState",@"toState"]];
+ _stateObserver = [[StateObserver alloc] initWithDelegate:self fieldsToObserve:@[@"frame",@"color"]];
  }
  return _stateObserver;
  

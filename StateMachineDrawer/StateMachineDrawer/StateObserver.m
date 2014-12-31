@@ -8,22 +8,15 @@
 
 #import "StateObserver.h"
 
-#define OBSERVANCE_KEYS @[@"frame",@"color"]
-
-@interface StateObserver ()
-
-@property(nonatomic)NSArray *fields;
-
-@end
+#define OBSERVANCE_KEYS @[@"frame",@"color",@"markedForDeletion"]
 
 @implementation StateObserver
 
--(instancetype)initWithDelegate:(id<StateObserverDelegate>)delegate fieldsToObserve:(NSArray*)fields {
+-(instancetype)initWithDelegate:(id<StateObserverDelegate>)delegate {
 
     self = [super init];
     if(self) {
         _delegate = delegate;
-        _fields = fields;
     }
     return self;
     
@@ -35,7 +28,7 @@
     if(!state)
         return;
     
-    for (NSString *observanceKey in _fields) {
+    for (NSString *observanceKey in OBSERVANCE_KEYS) {
         
         if(add) {
             
