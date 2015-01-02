@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StateMachine.h"
+
+@protocol SavedStateMachinesTableViewControllerDelegate <NSObject>
+
+-(void)stateMachinesTableViewControllerSelectedStateMachine:(StateMachine*)stateMachine;
+
+@end
 
 @interface SavedStateMachinesTableViewController : UITableViewController
 
 -(IBAction)pressedBackButton:(id)sender;
+
+@property(nonatomic,weak)id<SavedStateMachinesTableViewControllerDelegate> delegate;
 
 @end

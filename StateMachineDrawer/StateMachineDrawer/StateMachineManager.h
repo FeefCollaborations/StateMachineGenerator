@@ -12,5 +12,6 @@
 @interface StateMachineManager : UniqueIDModelManager
 
 -(void)writeToLocalStorage;
+-(StateMachine*)stateMachineForID:(NSString*)id;
 
 @end

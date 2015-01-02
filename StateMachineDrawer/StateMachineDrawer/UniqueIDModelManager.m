@@ -45,11 +45,18 @@
 
 }
 
-//Remove a model to the current model dictionary
+//Remove a model from the current model dictionary
 -(void)removeModel:(UniqueIDModel*)model {
 
-    [self.models removeObjectForKey:model.id];
+    [self removeModelWithID:model.id];
 
+}
+
+//Remove a model with the given ID from the current model dictionary
+-(void)removeModelWithID:(NSString*)modelID {
+    
+    [self.models removeObjectForKey:modelID];
+    
 }
 
 //Return the model with the provided id

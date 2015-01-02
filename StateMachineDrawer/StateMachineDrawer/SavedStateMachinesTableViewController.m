@@ -17,10 +17,20 @@
     
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CELL_IDENTIFIER];
+    
+}
 
-    UILabel *noContentsLabel = [[UILabel alloc] init];
-    [noContentsLabel setTextAlignment:NSTextAlignmentCenter];
-    [noContentsLabel setText:@"No saved state machines"];
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    UILabel *noContentsLabel = nil;
+    if([self tableView:self.tableView numberOfRowsInSection:0] == 0) {
+        
+        noContentsLabel = [[UILabel alloc] init];
+        [noContentsLabel setTextAlignment:NSTextAlignmentCenter];
+        [noContentsLabel setText:@"No saved state machines"];
+        
+    }
     [self.tableView setBackgroundView:noContentsLabel];
     
 }
@@ -46,6 +56,21 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return [[StateMachineManager sharedInstance] allModels].count;
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(_delegate && [_delegate respondsToSelector:@selector(stateMachinesTableViewControllerSelectedStateMachine:)]) {
+        [_delegate stateMachinesTableViewControllerSelectedStateMachine:[[[StateMachineManager sharedInstance] allModels] objectAtIndex:indexPath.row]];
+    }
+    
+}
+
+-(void)setDelegate:(id<SavedStateMachinesTableViewControllerDelegate>)delegate {
+    
+    _delegate = delegate;
     
 }
 

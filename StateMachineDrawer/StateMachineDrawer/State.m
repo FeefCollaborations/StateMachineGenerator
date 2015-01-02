@@ -9,6 +9,7 @@
 #import "State.h"
 #import "StateManager.h"
 #import "Transition.h"
+#import "SMHelperFunctions.h"
 
 #define BOUNDARY_INSET 30
 
@@ -63,7 +64,7 @@
 //add a transition to another state
 -(void)addTransitionToState:(State*)state {
     
-    Transition *transition = [[Transition alloc] initWithFromState:self toState:state];
+    Transition *transition = [[Transition alloc] initWithFromStateID:self.id toStateID:state.id];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recievedStateDeletionNotification:) name:STATE_DELETED_NOTIFICATION_KEY object:state];
     [self.transitions setObject:transition forKey:state.id];
     
@@ -157,15 +158,14 @@
         _title = [aDecoder decodeObjectForKey:TITLE_KEY];
         _markedForDeletion = [aDecoder decodeBoolForKey:MARKED_FOR_DELETION_KEY];
         
-        NSMutableDictionary *transitions = [[NSMutableDictionary alloc] init];
-        NSArray *objectDatas = [aDecoder decodeObjectForKey:TRANSITIONS_KEY];
-        for (NSData *data in objectDatas) {
+        NSArray *transitions = [SMHelperFunctions unarchiveArrayOfObjectsFromDataArray:[aDecoder decodeObjectForKey:TRANSITIONS_KEY]];
+        NSMutableDictionary *transitionsDict = [[NSMutableDictionary alloc] init];
+        for (Transition *transition in transitions) {
             
-            Transition *transition = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            [transitions setObject:transition forKey:transition.toState.id];
+            [transitionsDict setObject:transition forKey:transition.toStateID];
             
         }
-        _transitions = (NSMutableDictionary<Transition>*)transitions;
+        _transitions = (NSMutableDictionary<Transition>*)transitionsDict;
         
     }
     return self;
@@ -180,7 +180,7 @@
     [aCoder encodeObject:_color forKey:COLOR_KEY];
     [aCoder encodeObject:_title forKey:TITLE_KEY];
     [aCoder encodeBool:_markedForDeletion forKey:MARKED_FOR_DELETION_KEY];
-    [aCoder encodeObject:_transitions forKey:TRANSITIONS_KEY];
+    [aCoder encodeObject:[SMHelperFunctions archiveDatasOfObjects:_transitions.allValues] forKey:TRANSITIONS_KEY];
     
 }
 

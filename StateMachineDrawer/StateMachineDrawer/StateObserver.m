@@ -7,6 +7,7 @@
 //
 
 #import "StateObserver.h"
+#import "StateManager.h"
 
 #define OBSERVANCE_KEYS @[@"frame",@"color",@"markedForDeletion"]
 
@@ -49,8 +50,8 @@
     if(!transition)
         return;
     
-    [self add:add observersForState:transition.fromState];
-    [self add:add observersForState:transition.toState];
+    [self add:add observersForState:[[StateManager sharedInstance] stateForID:transition.fromStateID]];
+    [self add:add observersForState:[[StateManager sharedInstance] stateForID:transition.toStateID]];
     
 }
 
