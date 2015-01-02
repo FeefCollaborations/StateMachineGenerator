@@ -12,12 +12,12 @@
 @protocol Transition <NSObject>
 @end
 
-@interface Transition : NSObject
+@interface Transition : NSObject <NSCoding>
 
 -(instancetype)initWithFromState:(State*)fState toState:(State*)tState;
 
-@property(nonatomic,readonly)State *fromState;
-@property(nonatomic,readonly)State *toState;
+@property(nonatomic,weak,readonly)State *fromState;
+@property(nonatomic,weak,readonly)State *toState;
 @property(nonatomic,readonly)CGRect frame;
 @property(nonatomic,readonly)CGPoint fromPoint;
 @property(nonatomic,readonly)CGPoint toPoint;

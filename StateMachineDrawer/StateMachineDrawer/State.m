@@ -146,7 +146,6 @@
 #define MARKED_FOR_DELETION_KEY @"markedForDeletion"
 #define TRANSITIONS_KEY @"transitions"
 
-
 -(id)initWithCoder:(NSCoder *)aDecoder {
     
     self = [super initWithCoder:aDecoder];
@@ -157,7 +156,16 @@
         _color = [aDecoder decodeObjectForKey:COLOR_KEY];
         _title = [aDecoder decodeObjectForKey:TITLE_KEY];
         _markedForDeletion = [aDecoder decodeBoolForKey:MARKED_FOR_DELETION_KEY];
-        _transitions = [aDecoder decodeObjectForKey:TRANSITIONS_KEY];
+        
+        NSMutableDictionary *transitions = [[NSMutableDictionary alloc] init];
+        NSArray *objectDatas = [aDecoder decodeObjectForKey:TRANSITIONS_KEY];
+        for (NSData *data in objectDatas) {
+            
+            Transition *transition = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [transitions setObject:transition forKey:transition.toState.id];
+            
+        }
+        _transitions = (NSMutableDictionary<Transition>*)transitions;
         
     }
     return self;

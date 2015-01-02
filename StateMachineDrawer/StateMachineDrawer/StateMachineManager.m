@@ -27,7 +27,11 @@
 
 -(void)writeToLocalStorage {
     
-    [[NSUserDefaults standardUserDefaults] setObject:self.models forKey:STATE_MACHINE_LOCAL_STORAGE_KEY];
+    NSMutableArray *archivedObjects = [[NSMutableArray alloc] init];
+    for (StateMachine *sm in self.models) {
+        [archivedObjects addObject:[NSKeyedArchiver archivedDataWithRootObject:sm]];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:archivedObjects forKey:STATE_MACHINE_LOCAL_STORAGE_KEY];
     
 }
 
@@ -35,7 +39,15 @@
 
 -(NSArray<UniqueIDModel>*)readFromLocalStorage {
     
-    return (NSArray<UniqueIDModel>*)[[NSUserDefaults standardUserDefaults] objectForKey:STATE_MACHINE_LOCAL_STORAGE_KEY];
+    return nil;
+    
+    NSMutableArray *stateMachines = [[NSMutableArray alloc] init];
+    NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:STATE_MACHINE_LOCAL_STORAGE_KEY];
+    for (NSData *objectData in array) {
+        [stateMachines addObject:[NSKeyedUnarchiver unarchiveObjectWithData:objectData]];
+    }
+    
+    return (NSArray<UniqueIDModel>*)stateMachines;
     
 }
 

@@ -10,24 +10,6 @@
 
 @implementation UniqueIDModel
 
--(id)initWithCoder:(NSCoder *)aDecoder {
-    
-    self = [super init];
-    if(self) {
-        
-        _id = [aDecoder decodeObjectForKey:@"id"];
-        
-    }
-    return self;
-    
-}
-
--(void)encodeWithCoder:(NSCoder *)aCoder {
-    
-    [aCoder encodeObject:_id forKey:@"id"];
-    
-}
-
 -(instancetype)initWithUniqueModelIDManager:(id<UniqueIDModelManagerProtocol>)manager {
     
     self = [super init];
@@ -40,6 +22,26 @@
     
 }
 
+#pragma mark - NSCoding compliance
 
+#define ID_KEY @"id"
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super init];
+    if(self) {
+        
+        _id = [aDecoder decodeObjectForKey:ID_KEY];
+        
+    }
+    return self;
+    
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+    
+    [aCoder encodeObject:_id forKey:ID_KEY];
+    
+}
 
 @end

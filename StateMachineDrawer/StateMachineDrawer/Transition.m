@@ -7,11 +7,12 @@
 //
 
 #import "Transition.h"
+#import "StateManager.h"
 
 @interface Transition ()
 
-@property(nonatomic,readwrite)State *fromState;
-@property(nonatomic,readwrite)State *toState;
+@property(nonatomic,weak,readwrite)State *fromState;
+@property(nonatomic,weak,readwrite)State *toState;
 
 @end
 
@@ -179,6 +180,48 @@ enum {
 
 -(BOOL)isRightArrow {
     return isRightArrow;
+}
+
+#pragma mark - NSCoding compliance
+
+#define FROM_STATE_ID_KEY @"fromStateID"
+#define TO_STATE_ID_KEY @"toStateID"
+#define FRAME_KEY @"frame"
+#define FROM_POINT_KEY @"fromPoint"
+#define TO_POINT_KEY @"toPoint"
+#define TITLE_KEY @"title"
+#define COLOR_KEY @"color"
+
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super init];
+    if(self) {
+        
+        _fromState = (State*)[[StateManager sharedInstance] modelForID:[aDecoder decodeObjectForKey:FROM_STATE_ID_KEY]];
+        _toState = (State*)[[StateManager sharedInstance] modelForID:[aDecoder decodeObjectForKey:TO_STATE_ID_KEY]];
+        _frame = [aDecoder decodeCGRectForKey:FRAME_KEY];
+        _fromPoint = [aDecoder decodeCGPointForKey:FROM_POINT_KEY];
+        _toPoint = [aDecoder decodeCGPointForKey:TO_POINT_KEY];
+        _title = [aDecoder decodeObjectForKey:TITLE_KEY];
+        _color = [aDecoder decodeObjectForKey:COLOR_KEY];
+        
+    }
+    return self;
+    
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+    
+    [aCoder encodeObject:_fromState.id forKey:FROM_STATE_ID_KEY];
+    [aCoder encodeObject:_toState.id forKey:TO_STATE_ID_KEY];
+    [aCoder encodeCGRect:_frame forKey:FRAME_KEY];
+    [aCoder encodeCGPoint:_fromPoint forKey:FROM_POINT_KEY];
+    [aCoder encodeCGPoint:_toPoint forKey:TO_POINT_KEY];
+    [aCoder encodeObject:_title forKey:TITLE_KEY];
+    [aCoder encodeObject:_color forKey:COLOR_KEY];
+
+    
 }
 
 @end

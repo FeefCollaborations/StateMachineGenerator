@@ -28,4 +28,44 @@
     
 }
 
+#pragma mark - NSCoding compliance
+
+#define STATES_KEY @"states"
+#define TITLE_KEY @"title"
+
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+    
+    [super encodeWithCoder:aCoder];
+    NSMutableArray *stateDatas = [[NSMutableArray alloc] init];
+    for (State *state in self.states) {
+        
+        [stateDatas addObject:[NSKeyedArchiver archivedDataWithRootObject:state]];
+        
+    }
+    [aCoder encodeObject:stateDatas forKey:STATES_KEY];
+    [aCoder encodeObject:self.title forKey:TITLE_KEY];
+    
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        
+        NSMutableArray *states = [[NSMutableArray alloc] init];
+        NSArray *array = [aDecoder decodeObjectForKey:STATES_KEY];
+        for (NSData *data in array) {
+            
+            [states addObject:data];
+            
+        }
+        
+        _states = (NSArray<State>*)states;
+        _title = [aDecoder decodeObjectForKey:TITLE_KEY];
+        
+    }
+    return self;
+    
+}
+
 @end

@@ -13,7 +13,6 @@
 		481BFC781A519988001BA863 /* StateMachineComponentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 481BFC771A519988001BA863 /* StateMachineComponentView.m */; };
 		486354BA1A5609B7004731EA /* TextInputAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 486354B91A5609B7004731EA /* TextInputAlertView.m */; };
 		4873CCFF1A55EE6D00777908 /* SavedStateMachinesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CCFE1A55EE6D00777908 /* SavedStateMachinesTableViewController.m */; };
-		4873CD031A55EEDD00777908 /* StateMachineArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD021A55EEDD00777908 /* StateMachineArchiver.m */; };
 		4873CD061A55F32200777908 /* StateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD051A55F32200777908 /* StateMachine.m */; };
 		4873CD091A55F3D600777908 /* UniqueIDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD081A55F3D600777908 /* UniqueIDModel.m */; };
 		4873CD0C1A55F70200777908 /* StateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD0B1A55F70200777908 /* StateManager.m */; };
@@ -57,8 +56,6 @@
 		486354B91A5609B7004731EA /* TextInputAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextInputAlertView.m; sourceTree = "<group>"; };
 		4873CCFD1A55EE6D00777908 /* SavedStateMachinesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedStateMachinesTableViewController.h; sourceTree = "<group>"; };
 		4873CCFE1A55EE6D00777908 /* SavedStateMachinesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedStateMachinesTableViewController.m; sourceTree = "<group>"; };
-		4873CD011A55EEDD00777908 /* StateMachineArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachineArchiver.h; sourceTree = "<group>"; };
-		4873CD021A55EEDD00777908 /* StateMachineArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMachineArchiver.m; sourceTree = "<group>"; };
 		4873CD041A55F32200777908 /* StateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachine.h; sourceTree = "<group>"; };
 		4873CD051A55F32200777908 /* StateMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMachine.m; sourceTree = "<group>"; };
 		4873CD071A55F3D600777908 /* UniqueIDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniqueIDModel.h; sourceTree = "<group>"; };
@@ -155,8 +152,6 @@
 				4873CD0E1A55F71100777908 /* StateMachineManager.m */,
 				481BFC731A5192D7001BA863 /* StateObserver.h */,
 				481BFC741A5192D7001BA863 /* StateObserver.m */,
-				4873CD011A55EEDD00777908 /* StateMachineArchiver.h */,
-				4873CD021A55EEDD00777908 /* StateMachineArchiver.m */,
 				4873CD101A55F8AF00777908 /* UniqueIDModelManagerProtocol.h */,
 			);
 			name = Logic;
@@ -429,7 +424,6 @@
 				4873CD091A55F3D600777908 /* UniqueIDModel.m in Sources */,
 				4876D9F41A563B87004A4F61 /* UniqueIDModelManager.m in Sources */,
 				489ADD471A54B7A900CB3096 /* SMBubbleMenuButton.m in Sources */,
-				4873CD031A55EEDD00777908 /* StateMachineArchiver.m in Sources */,
 				4873CD0F1A55F71100777908 /* StateMachineManager.m in Sources */,
 				50A9F1CD1A54A6A400D3F06E /* StateToolDrawer.m in Sources */,
 				4876D9F71A563BD3004A4F61 /* State.m in Sources */,
