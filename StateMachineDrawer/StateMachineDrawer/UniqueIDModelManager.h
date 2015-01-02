@@ -16,7 +16,8 @@
 -(NSString*)safeModelID; //A new modelID that can be used by a newly created model
 -(void)setupWithModelArray:(NSArray<UniqueIDModel>*)modelArray; //Remove all current models from model dictionary and add given models
 -(void)addModel:(UniqueIDModel*)model; //Add a model to the current model dictionary
--(void)removeModel:(UniqueIDModel*)model; //Remove a model to the current model dictionary
+-(void)removeModel:(UniqueIDModel*)model; //Remove a model from the current model dictionary
+-(void)removeModelWithID:(NSString*)modelID; //Remove a model with the given ID from the current model dictionary
 -(UniqueIDModel*)modelForID:(NSString*)id; //Return the model with the provided id
 -(NSArray*)allModels; //Array of all models currently in the manager
 

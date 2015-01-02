@@ -33,7 +33,7 @@
         UIButton *homeButton = [self menuButtonWithImageName:@"menu" tag:0];
         self.homeButtonView = homeButton;
         
-        NSArray *imageTitles = @[@"saveAs",@"import",@"pdf",@"changeUser",@"deleteSign"];
+        NSArray *imageTitles = @[@"saveAs",@"import",@"pdf",@"deleteSign",@"changeUser"];
         for (int i = 0; i<imageTitles.count; i++) {
             
             [self addButton:[self menuButtonWithImageName:[imageTitles objectAtIndex:i] tag:i+1]];

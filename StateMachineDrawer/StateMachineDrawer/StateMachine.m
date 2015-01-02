@@ -8,6 +8,7 @@
 
 #import "StateMachine.h"
 #import "StateMachineManager.h"
+#import "SMHelperFunctions.h"
 
 @implementation StateMachine
 
@@ -36,13 +37,7 @@
 -(void)encodeWithCoder:(NSCoder *)aCoder {
     
     [super encodeWithCoder:aCoder];
-    NSMutableArray *stateDatas = [[NSMutableArray alloc] init];
-    for (State *state in self.states) {
-        
-        [stateDatas addObject:[NSKeyedArchiver archivedDataWithRootObject:state]];
-        
-    }
-    [aCoder encodeObject:stateDatas forKey:STATES_KEY];
+    [aCoder encodeObject:[SMHelperFunctions archiveDatasOfObjects:self.states] forKey:STATES_KEY];
     [aCoder encodeObject:self.title forKey:TITLE_KEY];
     
 }
@@ -52,15 +47,7 @@
     self = [super initWithCoder:aDecoder];
     if(self) {
         
-        NSMutableArray *states = [[NSMutableArray alloc] init];
-        NSArray *array = [aDecoder decodeObjectForKey:STATES_KEY];
-        for (NSData *data in array) {
-            
-            [states addObject:data];
-            
-        }
-        
-        _states = (NSArray<State>*)states;
+        _states = (NSArray<State>*)[SMHelperFunctions unarchiveArrayOfObjectsFromDataArray:[aDecoder decodeObjectForKey:STATES_KEY]];
         _title = [aDecoder decodeObjectForKey:TITLE_KEY];
         
     }

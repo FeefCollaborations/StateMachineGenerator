@@ -14,9 +14,11 @@
 #import "TextInputAlertView.h"
 #import "StateMachine.h"
 #import "StateToolDrawer.h"
+#import "SavedStateMachinesTableViewController.h"
 
 #define UNSELECTED_STATE_COLOR [UIColor blackColor]
 #define SELECTED_STATE_COLOR [UIColor blueColor]
+#define STATE_MACHINE_PICKER_SEGUE_ID @"ToStateMachinePicker"
 
 typedef enum {
     
@@ -27,9 +29,10 @@ typedef enum {
     
 } StateEditOption;
 
-@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate, SMBubbleMenuButtonDelegate, SDCAlertViewDelegate>
+@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate, SMBubbleMenuButtonDelegate, SDCAlertViewDelegate, SavedStateMachinesTableViewControllerDelegate>
 
 @property(nonatomic)StateView *selectedStateView;
+@property(nonatomic)StateMachine *stateMachine;
 @property(nonatomic)NSMutableArray *stateViews;
 @property BOOL panSelected;
 @property BOOL pressedInsideState;
@@ -37,6 +40,8 @@ typedef enum {
 @property(nonatomic) StateEditOption currentStateEditOption;
 @property(nonatomic) SMBubbleMenuButton *bubbleMenuButton;
 @property(nonatomic) TextInputAlertView *saveStateMachineAlertView;
+@property(nonatomic) TextInputAlertView *pdfExportAlertView;
+@property(nonatomic) UIAlertView *deleteStateMachineAlertView;
 @property(nonatomic)StateToolDrawer *toolBox;
 
 @end
@@ -75,17 +80,32 @@ typedef enum {
             return NO;
         
         [self deselectSelectedStateView];
-        self.selectedStateView = [StateView new];
-        [self.selectedStateView addTarget:self action:@selector(pressedDownOnStateView:) forControlEvents:UIControlEventTouchDown];
-        [self.selectedStateView addTarget:self action:@selector(pressedUpOnViewButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self.selectedStateView setSMstate:[[State alloc] initWithCenter:[gestureRecognizer locationInView:self.view]]];
-        self.createdStatesCount++;
-        self.selectedStateView.SMstate.color = SELECTED_STATE_COLOR;
-        self.selectedStateView.SMstate.title = [NSString stringWithFormat:@"state #%i", self.createdStatesCount];
-        [self.view addSubview:self.selectedStateView];
-        [self.stateViews addObject:self.selectedStateView];
+        self.selectedStateView = [self addStateViewFromState:[self defaultStateWithCenter:[gestureRecognizer locationInView:self.view] stateNumber:self.createdStatesCount+1]];
+        
     }
     return YES;
+    
+}
+
+-(State*)defaultStateWithCenter:(CGPoint)center stateNumber:(int)stateNumber {
+    
+    State *state = [[State alloc] initWithCenter:center];
+    state.color = SELECTED_STATE_COLOR;
+    state.title = [NSString stringWithFormat:@"state #%i", stateNumber];
+    return state;
+    
+}
+
+-(StateView*)addStateViewFromState:(State*)state {
+    
+    StateView *sv = [StateView new];
+    [sv addTarget:self action:@selector(pressedDownOnStateView:) forControlEvents:UIControlEventTouchDown];
+    [sv addTarget:self action:@selector(pressedUpOnViewButton:) forControlEvents:UIControlEventTouchUpInside];
+    [sv setSMstate:state];
+    self.createdStatesCount++;
+    [self.view addSubview:sv];
+    [self.stateViews addObject:sv];
+    return sv;
     
 }
 
@@ -219,23 +239,29 @@ typedef enum {
             case SABubbleMenuButtonTypeSave:
         {
             //Save state machine locally
-            [self.saveStateMachineAlertView show];
+            if(self.stateMachine) {
+                [[StateMachineManager sharedInstance] addModel:self.stateMachine];
+            } else {
+                [self.saveStateMachineAlertView show];
+            }
             break;
         }
             case SABubbleMenuButtonTypeLoad:
         {
             //Show prompt to select state machine from saved states
-            [self performSegueWithIdentifier:@"ToStateMachinePicker" sender:nil];
+            [self performSegueWithIdentifier:STATE_MACHINE_PICKER_SEGUE_ID sender:nil];
             break;
         }
             case SABubbleMenuButtonTypeExportAsPDF:
         {
             //Show prompt to name PDF export
+            [self.pdfExportAlertView show];
             break;
         }
         case SABubbleMenuButtonTypeDeleteMachine:
         {
             //Delete the state machine from the archiver and start a blank project
+            [self.deleteStateMachineAlertView show];
             break;
         }
             case SABubbleMenuButtonTypeManageAccount:
@@ -259,19 +285,84 @@ typedef enum {
     
 }
 
+-(TextInputAlertView *)pdfExportAlertView {
+    
+    if(!_pdfExportAlertView) {
+        _pdfExportAlertView = [[TextInputAlertView alloc] initWithTitle:@"Export State Machine" message:@"Name your pdf:" placeholderText:@"My awesome state machine" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+    }
+    return _pdfExportAlertView;
+    
+}
+
+-(UIAlertView *)deleteStateMachineAlertView {
+    
+    if(!_deleteStateMachineAlertView)
+        _deleteStateMachineAlertView = [[UIAlertView alloc] initWithTitle:@"Delete?" message:@"Are you sure you want to delete this state machine?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    return _deleteStateMachineAlertView;
+    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if([segue.identifier isEqualToString:STATE_MACHINE_PICKER_SEGUE_ID]) {
+        
+        [(SavedStateMachinesTableViewController*)[[segue.destinationViewController viewControllers] firstObject] setDelegate:self];
+        
+    }
+    
+}
+
+-(void)stateMachinesTableViewControllerSelectedStateMachine:(StateMachine *)stateMachine {
+    
+    [self resetToStateMachine:stateMachine];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+-(void)resetToStateMachine:(StateMachine*)stateMachine {
+    
+    self.selectedStateView = nil;
+    for (UIView *subview in self.view.subviews) {
+        if(![subview isEqual:self.bubbleMenuButton])
+            [subview removeFromSuperview];
+    }
+    [self.stateViews removeAllObjects];
+    
+    self.stateMachine = stateMachine;
+    if(stateMachine) {
+        for (State *state in stateMachine.states) {
+            
+            [self.stateViews addObject:[self addStateViewFromState:state]];
+            
+        }
+    }
+    
+}
+
 -(void)alertView:(SDCAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if([alertView isEqual:self.saveStateMachineAlertView]) {
         
         if(buttonIndex != alertView.cancelButtonIndex) {
             
+            //Save a new state machine
             StateMachine *stateMachine = [[StateMachine alloc] initWithTitle:[[self.saveStateMachineAlertView textField] text] stateViews:(NSArray<StateView>*)self.stateViews];
             [[StateMachineManager sharedInstance] addModel:stateMachine];
+            self.stateMachine = stateMachine;
             
         }
         
-    }
-    else {
+    } else if([alertView isEqual:self.deleteStateMachineAlertView]) {
+      
+        if(self.stateMachine) {
+            
+            [[StateMachineManager sharedInstance] removeModelWithID:self.stateMachine.id];
+            
+        }
+        [self resetToStateMachine:nil];
+        
+    } else {
         
         if(buttonIndex != alertView.cancelButtonIndex) {
             

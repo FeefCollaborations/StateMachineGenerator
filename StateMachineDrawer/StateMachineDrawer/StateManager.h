@@ -7,7 +7,10 @@
 //
 
 #import "UniqueIDModelManager.h"
+#import "State.h"
 
 @interface StateManager : UniqueIDModelManager
+
+-(State*)stateForID:(NSString*)id;
 
 @end

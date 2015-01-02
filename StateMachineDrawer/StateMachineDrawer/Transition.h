@@ -6,18 +6,17 @@
 //  Copyright (c) 2014 Feef. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "State.h"
+#import <UIKit/UIKit.h>
 
 @protocol Transition <NSObject>
 @end
 
 @interface Transition : NSObject <NSCoding>
 
--(instancetype)initWithFromState:(State*)fState toState:(State*)tState;
+-(instancetype)initWithFromStateID:(NSString*)fStateID toStateID:(NSString*)tStateID;
 
-@property(nonatomic,weak,readonly)State *fromState;
-@property(nonatomic,weak,readonly)State *toState;
+@property(nonatomic,readonly)NSString *fromStateID;
+@property(nonatomic,readonly)NSString *toStateID;
 @property(nonatomic,readonly)CGRect frame;
 @property(nonatomic,readonly)CGPoint fromPoint;
 @property(nonatomic,readonly)CGPoint toPoint;

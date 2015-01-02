@@ -28,6 +28,7 @@
 		48D34B831A5092550006C54B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48D34B811A5092550006C54B /* LaunchScreen.xib */; };
 		48D34B8F1A5092550006C54B /* StateMachineDrawerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B8E1A5092550006C54B /* StateMachineDrawerTests.m */; };
 		48D34BA31A50A27D0006C54B /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34BA21A50A27D0006C54B /* StateView.m */; };
+		48D3E21B1A57240A0097788D /* SMHelperFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D3E21A1A57240A0097788D /* SMHelperFunctions.m */; };
 		50A9F1CD1A54A6A400D3F06E /* StateToolDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A9F1CC1A54A6A400D3F06E /* StateToolDrawer.m */; };
 		50A9F1D01A54B50600D3F06E /* ColorPalletteCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A9F1CF1A54B50600D3F06E /* ColorPalletteCollectionViewController.m */; };
 		6CD3E6214CB9C792EB9A5E99 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F34E104BB239B02E5FDD31A1 /* libPods.a */; };
@@ -86,6 +87,8 @@
 		48D34B8E1A5092550006C54B /* StateMachineDrawerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StateMachineDrawerTests.m; sourceTree = "<group>"; };
 		48D34BA11A50A27D0006C54B /* StateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateView.h; sourceTree = "<group>"; };
 		48D34BA21A50A27D0006C54B /* StateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateView.m; sourceTree = "<group>"; };
+		48D3E2191A57240A0097788D /* SMHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMHelperFunctions.h; sourceTree = "<group>"; };
+		48D3E21A1A57240A0097788D /* SMHelperFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMHelperFunctions.m; sourceTree = "<group>"; };
 		48D527861A54A2CE00789B6F /* SMGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMGlobals.h; sourceTree = "<group>"; };
 		50A9F1CB1A54A6A400D3F06E /* StateToolDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateToolDrawer.h; sourceTree = "<group>"; };
 		50A9F1CC1A54A6A400D3F06E /* StateToolDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateToolDrawer.m; sourceTree = "<group>"; };
@@ -208,6 +211,8 @@
 			children = (
 				48D34B761A5092550006C54B /* AppDelegate.h */,
 				48D34B771A5092550006C54B /* AppDelegate.m */,
+				48D3E2191A57240A0097788D /* SMHelperFunctions.h */,
+				48D3E21A1A57240A0097788D /* SMHelperFunctions.m */,
 				48D527861A54A2CE00789B6F /* SMGlobals.h */,
 				481BFC7C1A519A2B001BA863 /* Models */,
 				481BFC791A519A0A001BA863 /* Views */,
@@ -426,6 +431,7 @@
 				4876D9F41A563B87004A4F61 /* UniqueIDModelManager.m in Sources */,
 				489ADD471A54B7A900CB3096 /* SMBubbleMenuButton.m in Sources */,
 				4873CD0F1A55F71100777908 /* StateMachineManager.m in Sources */,
+				48D3E21B1A57240A0097788D /* SMHelperFunctions.m in Sources */,
 				50A9F1CD1A54A6A400D3F06E /* StateToolDrawer.m in Sources */,
 				4876D9F71A563BD3004A4F61 /* State.m in Sources */,
 				50A9F1D01A54B50600D3F06E /* ColorPalletteCollectionViewController.m in Sources */,
@@ -559,6 +565,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -572,6 +579,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

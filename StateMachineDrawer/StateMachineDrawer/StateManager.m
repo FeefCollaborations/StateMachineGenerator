@@ -22,4 +22,11 @@
     return sSharedInstance;
 }
 
+//Return the state with the provided id
+-(State*)stateForID:(NSString*)id {
+    
+    return (State*)[self.models objectForKey:id];
+    
+}
+
 @end

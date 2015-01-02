@@ -8,11 +8,9 @@
 
 #import "Transition.h"
 #import "StateManager.h"
+#import "State.h"
 
 @interface Transition ()
-
-@property(nonatomic,weak,readwrite)State *fromState;
-@property(nonatomic,weak,readwrite)State *toState;
 
 @end
 
@@ -20,20 +18,20 @@
 
 bool isRightArrow;
 
-enum {
+typedef enum {
     kTopOfRect,
     kBottomOfRect,
     kLeftOfRect,
     kRightOfRect
-};
+}RectSide;
 
--(instancetype)initWithFromState:(State *)fState toState:(State *)tState {
-    
+-(instancetype)initWithFromStateID:(NSString*)fStateID toStateID:(NSString*)tStateID {
+
     self = [super init];
     if(self) {
         
-        _fromState = fState;
-        _toState = tState;
+        _fromStateID = fStateID;
+        _toStateID = tStateID;
         isRightArrow = true;
         [self findEndPoints];
         
@@ -53,29 +51,31 @@ enum {
     
 }
 
--(CGPoint)setFromPointFromInt:(int)rectSide {
+-(CGPoint)pointFromRectSide:(RectSide)rectSide ofStateWithID:(NSString*)stateID {
     
     CGPoint fromPoint = CGPointMake(0, 0);
+    
+    State *state = [[StateManager sharedInstance] stateForID:stateID];
     
     switch (rectSide) {
         case kTopOfRect:
             //Top of the rect
-            fromPoint.x = _fromState.center.x;
-            fromPoint.y = _fromState.center.y - (_fromState.frame.size.height / 2);
+            fromPoint.x = state.center.x;
+            fromPoint.y = state.center.y - (state.frame.size.height / 2);
             break;
         case kBottomOfRect:
             //Bottom of the rect
-            fromPoint.x = _fromState.center.x;
-            fromPoint.y = _fromState.center.y + (_fromState.frame.size.height / 2);
+            fromPoint.x = state.center.x;
+            fromPoint.y = state.center.y + (state.frame.size.height / 2);
             break;
         case kLeftOfRect:
             //Left of the rect
-            fromPoint.x = _fromState.center.x - (_fromState.frame.size.width / 2);
-            fromPoint.y = _fromState.center.y;
+            fromPoint.x = state.center.x - (state.frame.size.width / 2);
+            fromPoint.y = state.center.y;
             break;
         case kRightOfRect:
-            fromPoint.x = _fromState.center.x + (_fromState.frame.size.width / 2);
-            fromPoint.y = _fromState.center.y;
+            fromPoint.x = state.center.x + (state.frame.size.width / 2);
+            fromPoint.y = state.center.y;
             break;
             
         default:
@@ -83,46 +83,14 @@ enum {
     }
     
     return fromPoint;
+    
 }
-
--(CGPoint)setToPointFromInt:(int)rectSide {
-    
-    CGPoint toPoint = CGPointMake(0, 0);
-    
-    switch (rectSide) {
-        case kTopOfRect:
-            //Top of the rect
-            toPoint.x = _toState.center.x;
-            toPoint.y = _toState.center.y - (_toState.frame.size.height / 2);
-            break;
-        case kBottomOfRect:
-            //Bottom of the rect
-            toPoint.x = _toState.center.x;
-            toPoint.y = _toState.center.y + (_toState.frame.size.height / 2);
-            break;
-        case kLeftOfRect:
-            //Left of the rect
-            toPoint.x = _toState.center.x - (_toState.frame.size.width / 2);
-            toPoint.y = _toState.center.y;
-            break;
-        case kRightOfRect:
-            toPoint.x = _toState.center.x + (_toState.frame.size.width / 2);
-            toPoint.y = _toState.center.y;
-            break;
-            
-        default:
-            break;
-    }
-    
-    return toPoint;
-}
-
 
 
 -(float)distanceFromSide:(int)from toSide:(int)to {
     
-    CGPoint fromPoint = [self setFromPointFromInt:from];
-    CGPoint toPoint = [self setToPointFromInt:to];
+    CGPoint fromPoint = [self pointFromRectSide:from ofStateWithID:self.fromStateID];
+    CGPoint toPoint = [self pointFromRectSide:to ofStateWithID:self.toStateID];
     
     return [self distanceFromPoint:fromPoint toPoint:toPoint];
 }
@@ -143,7 +111,7 @@ enum {
     int fromSide = 0;
     int toSide = 0;
     
-    if (_fromState.center.x > _toState.center.x) {
+    if ([[StateManager sharedInstance] stateForID:self.fromStateID].center.x > [[StateManager sharedInstance] stateForID:self.toStateID].center.x) {
         isRightArrow = false;
     }
     
@@ -159,8 +127,8 @@ enum {
             }
         }
     }
-    _fromPoint = [self setFromPointFromInt:fromSide];
-    _toPoint = [self setToPointFromInt:toSide];
+    _fromPoint = [self pointFromRectSide:fromSide ofStateWithID:self.fromStateID];
+    _toPoint = [self pointFromRectSide:toSide ofStateWithID:self.toStateID];
     [self updateFrame];
     
 }
@@ -198,8 +166,8 @@ enum {
     self = [super init];
     if(self) {
         
-        _fromState = (State*)[[StateManager sharedInstance] modelForID:[aDecoder decodeObjectForKey:FROM_STATE_ID_KEY]];
-        _toState = (State*)[[StateManager sharedInstance] modelForID:[aDecoder decodeObjectForKey:TO_STATE_ID_KEY]];
+        _fromStateID = [aDecoder decodeObjectForKey:FROM_STATE_ID_KEY];
+        _toStateID = [aDecoder decodeObjectForKey:TO_STATE_ID_KEY];
         _frame = [aDecoder decodeCGRectForKey:FRAME_KEY];
         _fromPoint = [aDecoder decodeCGPointForKey:FROM_POINT_KEY];
         _toPoint = [aDecoder decodeCGPointForKey:TO_POINT_KEY];
@@ -213,8 +181,8 @@ enum {
 
 -(void)encodeWithCoder:(NSCoder *)aCoder {
     
-    [aCoder encodeObject:_fromState.id forKey:FROM_STATE_ID_KEY];
-    [aCoder encodeObject:_toState.id forKey:TO_STATE_ID_KEY];
+    [aCoder encodeObject:_fromStateID forKey:FROM_STATE_ID_KEY];
+    [aCoder encodeObject:_toStateID forKey:TO_STATE_ID_KEY];
     [aCoder encodeCGRect:_frame forKey:FRAME_KEY];
     [aCoder encodeCGPoint:_fromPoint forKey:FROM_POINT_KEY];
     [aCoder encodeCGPoint:_toPoint forKey:TO_POINT_KEY];

@@ -15,6 +15,17 @@
 
 @implementation AppDelegate
 
+//A singleton StateManager
++(instancetype)sharedInstance {
+    static dispatch_once_t  onceToken;
+    static AppDelegate * sSharedInstance;
+    
+    dispatch_once(&onceToken, ^{
+        sSharedInstance = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    });
+    
+    return sSharedInstance;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
