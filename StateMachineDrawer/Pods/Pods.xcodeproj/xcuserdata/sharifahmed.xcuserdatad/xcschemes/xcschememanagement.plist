@@ -4,7 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-HMSideMenu.xcscheme</key>
+		<key>Pods-DWBubbleMenuButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-RBBAnimation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SDCAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SDCAutoLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>03AD33B48BC4C0889810B384</key>
+		<key>31225EAE40D9BA3B8EB5B0E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>87508D9A98582F7341131109</key>
+		<key>76205DF766F9DDCE147A6EF6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7E5FE2402A259A6B3C04C960</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE72A6AE322B8F4B7CAF6F6E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F7666F96420669A1A048B817</key>
 		<dict>
 			<key>primary</key>
 			<true/>

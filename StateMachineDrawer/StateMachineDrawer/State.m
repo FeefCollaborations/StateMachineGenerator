@@ -14,7 +14,6 @@
 
 @interface State ()
 
-@property(nonatomic, readwrite) NSString *id;
 @property(nonatomic, readwrite) CGRect frame;
 @property(nonatomic) NSMutableDictionary <Transition>*transitions;
 
@@ -24,12 +23,11 @@
 
 //create a new state around a center location
 -(instancetype)initWithCenter:(CGPoint)center {
-    self = [super init];
+    self = [super initWithUniqueModelIDManager:[StateManager sharedInstance]];
     if(self) {
         
         _center = center;
-        _id = [[StateManager sharedInstance] safeStateID];
-        _title = _id;
+        _title = self.id;
         _color = [UIColor blackColor];
         [self updateFrame];
         
@@ -42,7 +40,7 @@
     
     self.markedForDeletion = YES;
     
-    [[StateManager sharedInstance] removeState:self];
+    [[UniqueIDModelManager sharedInstance] removeModel:self];
     
     for (Transition *transition in self.transitions.allValues) {
         
@@ -137,6 +135,45 @@
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - NSCoding compliance
+
+#define FRAME_KEY @"frame"
+#define CENTER_KEY @"center"
+#define COLOR_KEY @"color"
+#define TITLE_KEY @"title"
+#define MARKED_FOR_DELETION_KEY @"markedForDeletion"
+#define TRANSITIONS_KEY @"transitions"
+
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        
+        _frame = [aDecoder decodeCGRectForKey:FRAME_KEY];
+        _center = [aDecoder decodeCGPointForKey:CENTER_KEY];
+        _color = [aDecoder decodeObjectForKey:COLOR_KEY];
+        _title = [aDecoder decodeObjectForKey:TITLE_KEY];
+        _markedForDeletion = [aDecoder decodeBoolForKey:MARKED_FOR_DELETION_KEY];
+        _transitions = [aDecoder decodeObjectForKey:TRANSITIONS_KEY];
+        
+    }
+    return self;
+    
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+    
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeCGRect:_frame forKey:FRAME_KEY];
+    [aCoder encodeCGPoint:_center forKey:CENTER_KEY];
+    [aCoder encodeObject:_color forKey:COLOR_KEY];
+    [aCoder encodeObject:_title forKey:TITLE_KEY];
+    [aCoder encodeBool:_markedForDeletion forKey:MARKED_FOR_DELETION_KEY];
+    [aCoder encodeObject:_transitions forKey:TRANSITIONS_KEY];
+    
 }
 
 @end

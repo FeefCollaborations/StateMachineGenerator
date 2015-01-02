@@ -9,6 +9,10 @@
 #import "ViewController.h"
 #import "StateView.h"
 #import "TransitionView.h"
+#import "SMBubbleMenuButton.h"
+#import "StateMachineManager.h"
+#import "TextInputAlertView.h"
+#import "StateMachine.h"
 
 #define UNSELECTED_STATE_COLOR [UIColor blackColor]
 #define SELECTED_STATE_COLOR [UIColor blueColor]
@@ -22,7 +26,7 @@ typedef enum {
     
 } StateEditOption;
 
-@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate>
+@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate, SMBubbleMenuButtonDelegate, SDCAlertViewDelegate>
 
 @property(nonatomic)StateView *selectedStateView;
 @property(nonatomic)NSMutableArray *stateViews;
@@ -30,6 +34,8 @@ typedef enum {
 @property BOOL pressedInsideState;
 @property int createdStatesCount;
 @property(nonatomic) StateEditOption currentStateEditOption;
+@property(nonatomic) SMBubbleMenuButton *bubbleMenuButton;
+@property(nonatomic) TextInputAlertView *saveStateMachineAlertView;
 
 @end
 
@@ -40,6 +46,10 @@ typedef enum {
     [super viewDidLoad];
     
     self.createdStatesCount = 0;
+    
+    SMBubbleMenuButton *menuButton = self.bubbleMenuButton;
+    NSLog(@"frame is %@", NSStringFromCGRect(menuButton.frame));
+    [self.view addSubview:menuButton];
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPressRecognized:)];
@@ -154,23 +164,99 @@ typedef enum {
     
 }
 
--(void)selectedStateEditOptionChanged:(UISegmentedControl*)segmentedControl {
-    
-    self.currentStateEditOption = (StateEditOption)segmentedControl.selectedSegmentIndex;
-    
-    if(self.currentStateEditOption == StateEditOptionDelete) {
-        
-        [[[UIAlertView alloc] initWithTitle:@"Sure?" message:[NSString stringWithFormat:@"You sure you want to delete \"%@\"?", self.selectedStateView.SMstate.title] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"YES", nil] show];
-        
-    }
-    
-}
-
 -(NSMutableArray *)stateViews
 {
     if(!_stateViews)
         _stateViews = [[NSMutableArray alloc] init];
     return _stateViews;
+}
+
+-(SMBubbleMenuButton *)bubbleMenuButton
+{
+    if(!_bubbleMenuButton) {
+        _bubbleMenuButton = [[SMBubbleMenuButton alloc] initWithDelegate:self];
+    }
+    return _bubbleMenuButton;
+}
+
+-(void)bubbleMenuSelectedButtonWithType:(SABubbleMenuButtonType)buttonType {
+    
+    switch (buttonType) {
+            
+        case SABubbleMenuButtonTypeToggle:
+        {
+            if(self.bubbleMenuButton.isCollapsed)
+                [self.bubbleMenuButton showButtons];
+            else
+                [self.bubbleMenuButton dismissButtons];
+            break;
+        }
+            
+            case SABubbleMenuButtonTypeSave:
+        {
+            //Save state machine locally
+            [self.saveStateMachineAlertView show];
+            break;
+        }
+            case SABubbleMenuButtonTypeLoad:
+        {
+            //Show prompt to select state machine from saved states
+            [self performSegueWithIdentifier:@"ToStateMachinePicker" sender:nil];
+            break;
+        }
+            case SABubbleMenuButtonTypeExportAsPDF:
+        {
+            //Show prompt to name PDF export
+            break;
+        }
+        case SABubbleMenuButtonTypeDeleteMachine:
+        {
+            //Delete the state machine from the archiver and start a blank project
+            break;
+        }
+            case SABubbleMenuButtonTypeManageAccount:
+        {
+            //Show view controller to manage account currently being used
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+}
+
+-(TextInputAlertView *)saveStateMachineAlertView {
+    
+    if(!_saveStateMachineAlertView) {
+        _saveStateMachineAlertView = [[TextInputAlertView alloc] initWithTitle:@"Save State Machine" message:@"Name your state machine:" placeholderText:@"My awesome state machine" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+    }
+    return _saveStateMachineAlertView;
+    
+}
+
+-(void)alertView:(SDCAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if([alertView isEqual:self.saveStateMachineAlertView]) {
+        
+        if(buttonIndex != alertView.cancelButtonIndex) {
+            
+            StateMachine *stateMachine = [[StateMachine alloc] initWithTitle:[[self.saveStateMachineAlertView textField] text] stateViews:(NSArray<StateView>*)self.stateViews];
+            [[StateMachineManager sharedInstance] addModel:stateMachine];
+            
+        }
+        
+    }
+    else {
+        
+        if(buttonIndex != alertView.cancelButtonIndex) {
+            
+            NSString *pdfTitle = [[self.saveStateMachineAlertView textField] text];
+            
+        }
+        
+    }
+    
 }
 
 @end

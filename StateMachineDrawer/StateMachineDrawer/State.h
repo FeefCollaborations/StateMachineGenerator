@@ -9,11 +9,12 @@
 #define STATE_DELETED_NOTIFICATION_KEY @"stateDeletedNotificaitonKey"
 
 #import <UIKit/UIKit.h>
+#import "UniqueIDModel.h"
 
 @protocol State <NSObject>
 @end
 
-@interface State : NSObject
+@interface State : UniqueIDModel
 
 -(instancetype)initWithCenter:(CGPoint)center; //create a new state around a center location
 -(void)deleteState; //delete the state and all it's transitions
@@ -23,7 +24,6 @@
 -(void)setColor:(UIColor*)color; //recolor a state
 -(void)setCenter:(CGPoint)center; //move a state
 
-@property(nonatomic, readonly) NSString *id;
 @property(nonatomic, readonly) CGRect frame;
 @property(nonatomic) CGPoint center;
 @property(nonatomic) UIColor *color;

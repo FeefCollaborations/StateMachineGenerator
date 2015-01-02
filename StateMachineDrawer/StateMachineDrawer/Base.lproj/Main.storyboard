@@ -4,6 +4,19 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6213"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="WiD-8Z-Ikl">
+            <objects>
+                <navigationController id="2EB-68-i05" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cpB-NP-xAZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CAw-Sv-qoV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1061" y="327"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -19,10 +32,54 @@
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="oc8-tJ-LDA" kind="presentation" identifier="ToStateMachinePicker" id="rfl-eL-f5k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="256" y="329"/>
+            <point key="canvasLocation" x="256" y="327"/>
+        </scene>
+        <!--Saved State Machines-->
+        <scene sceneID="p65-8b-B5Q">
+            <objects>
+                <tableViewController id="PN0-Et-O2f" customClass="SavedStateMachinesTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yCz-70-uFs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <outlet property="dataSource" destination="PN0-Et-O2f" id="RMc-tS-mRg"/>
+                            <outlet property="delegate" destination="PN0-Et-O2f" id="sGT-a6-j5d"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Saved State Machines" id="W76-t2-HvB">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="xIb-L8-XpH">
+                            <connections>
+                                <action selector="pressedBackButton:" destination="PN0-Et-O2f" id="3fd-Ub-UwG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WZk-zM-g3D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1642" y="327"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="h18-FZ-oXI">
+            <objects>
+                <navigationController id="oc8-tJ-LDA" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IbR-c9-TAz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="PN0-Et-O2f" kind="relationship" relationship="rootViewController" id="njf-89-z75"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JkT-Pa-Ueq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="927" y="327"/>
         </scene>
     </scenes>
 </document>

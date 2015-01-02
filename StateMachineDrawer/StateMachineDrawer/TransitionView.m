@@ -33,7 +33,7 @@
 {
     
     if(!_stateObserver) {
-        _stateObserver = [[StateObserver alloc] initWithTarget:self];
+        //_stateObserver = [[StateObserver alloc] initWithTarget:self];
     }
     return _stateObserver;
     
