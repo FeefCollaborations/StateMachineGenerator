@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>53A8739A-BB3C-4CDD-9958-58B873EC0D6F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>StateMachineDrawer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2B90CBCBBA7107C2E37C9AFAB32CE8E3BDD82275</key>
+		<string>https://github.com/TuneCompass/StateMachineGenerator.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>StateMachineDrawer/StateMachineDrawer.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2B90CBCBBA7107C2E37C9AFAB32CE8E3BDD82275</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/TuneCompass/StateMachineGenerator.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2B90CBCBBA7107C2E37C9AFAB32CE8E3BDD82275</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2B90CBCBBA7107C2E37C9AFAB32CE8E3BDD82275</string>
+			<key>IDESourceControlWCCName</key>
+			<string>StateMachineGenerator</string>
+		</dict>
+	</array>
+</dict>
+</plist>
