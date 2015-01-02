@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481AA8211A563DD000206A26 /* Transition.m in Sources */ = {isa = PBXBuildFile; fileRef = 481AA8201A563DD000206A26 /* Transition.m */; };
 		481BFC6F1A518787001BA863 /* TransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 481BFC6E1A518787001BA863 /* TransitionView.m */; };
 		481BFC751A5192D7001BA863 /* StateObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 481BFC741A5192D7001BA863 /* StateObserver.m */; };
 		481BFC781A519988001BA863 /* StateMachineComponentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 481BFC771A519988001BA863 /* StateMachineComponentView.m */; };
@@ -17,18 +18,19 @@
 		4873CD091A55F3D600777908 /* UniqueIDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD081A55F3D600777908 /* UniqueIDModel.m */; };
 		4873CD0C1A55F70200777908 /* StateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD0B1A55F70200777908 /* StateManager.m */; };
 		4873CD0F1A55F71100777908 /* StateMachineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4873CD0E1A55F71100777908 /* StateMachineManager.m */; };
+		4876D9F41A563B87004A4F61 /* UniqueIDModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4876D9F31A563B87004A4F61 /* UniqueIDModelManager.m */; };
+		4876D9F71A563BD3004A4F61 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 4876D9F51A563BD3004A4F61 /* State.m */; };
+		4876D9F91A563BE6004A4F61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4876D9F81A563BE6004A4F61 /* main.m */; };
 		489ADD471A54B7A900CB3096 /* SMBubbleMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 489ADD461A54B7A900CB3096 /* SMBubbleMenuButton.m */; };
-		48D34B751A5092550006C54B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B741A5092550006C54B /* main.m */; };
 		48D34B781A5092550006C54B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B771A5092550006C54B /* AppDelegate.m */; };
 		48D34B7B1A5092550006C54B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B7A1A5092550006C54B /* ViewController.m */; };
 		48D34B7E1A5092550006C54B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48D34B7C1A5092550006C54B /* Main.storyboard */; };
 		48D34B801A5092550006C54B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48D34B7F1A5092550006C54B /* Images.xcassets */; };
 		48D34B831A5092550006C54B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48D34B811A5092550006C54B /* LaunchScreen.xib */; };
 		48D34B8F1A5092550006C54B /* StateMachineDrawerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B8E1A5092550006C54B /* StateMachineDrawerTests.m */; };
-		48D34B9A1A5093B60006C54B /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B991A5093B60006C54B /* State.m */; };
-		48D34B9D1A50941E0006C54B /* Transition.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B9C1A50941E0006C54B /* Transition.m */; };
-		48D34BA01A509CF90006C54B /* UniqueIDModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34B9F1A509CF90006C54B /* UniqueIDModelManager.m */; };
 		48D34BA31A50A27D0006C54B /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D34BA21A50A27D0006C54B /* StateView.m */; };
+		50A9F1CD1A54A6A400D3F06E /* StateToolDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A9F1CC1A54A6A400D3F06E /* StateToolDrawer.m */; };
+		50A9F1D01A54B50600D3F06E /* ColorPalletteCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A9F1CF1A54B50600D3F06E /* ColorPalletteCollectionViewController.m */; };
 		6CD3E6214CB9C792EB9A5E99 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F34E104BB239B02E5FDD31A1 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		481AA81F1A563DD000206A26 /* Transition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transition.h; sourceTree = "<group>"; };
+		481AA8201A563DD000206A26 /* Transition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transition.m; sourceTree = "<group>"; };
 		481BFC6D1A518787001BA863 /* TransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionView.h; sourceTree = "<group>"; };
 		481BFC6E1A518787001BA863 /* TransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionView.m; sourceTree = "<group>"; };
 		481BFC731A5192D7001BA863 /* StateObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateObserver.h; sourceTree = "<group>"; };
@@ -64,11 +68,15 @@
 		4873CD0D1A55F71100777908 /* StateMachineManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachineManager.h; sourceTree = "<group>"; };
 		4873CD0E1A55F71100777908 /* StateMachineManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMachineManager.m; sourceTree = "<group>"; };
 		4873CD101A55F8AF00777908 /* UniqueIDModelManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniqueIDModelManagerProtocol.h; sourceTree = "<group>"; };
+		4876D9F21A563B87004A4F61 /* UniqueIDModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniqueIDModelManager.h; sourceTree = "<group>"; };
+		4876D9F31A563B87004A4F61 /* UniqueIDModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniqueIDModelManager.m; sourceTree = "<group>"; };
+		4876D9F51A563BD3004A4F61 /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
+		4876D9F61A563BD3004A4F61 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
+		4876D9F81A563BE6004A4F61 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		489ADD451A54B7A900CB3096 /* SMBubbleMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBubbleMenuButton.h; sourceTree = "<group>"; };
 		489ADD461A54B7A900CB3096 /* SMBubbleMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBubbleMenuButton.m; sourceTree = "<group>"; };
 		48D34B6F1A5092550006C54B /* StateMachineDrawer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StateMachineDrawer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D34B731A5092550006C54B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		48D34B741A5092550006C54B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		48D34B761A5092550006C54B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		48D34B771A5092550006C54B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		48D34B791A5092550006C54B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -79,15 +87,13 @@
 		48D34B881A5092550006C54B /* StateMachineDrawerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StateMachineDrawerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D34B8D1A5092550006C54B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48D34B8E1A5092550006C54B /* StateMachineDrawerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StateMachineDrawerTests.m; sourceTree = "<group>"; };
-		48D34B981A5093B60006C54B /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
-		48D34B991A5093B60006C54B /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
-		48D34B9B1A50941E0006C54B /* Transition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transition.h; sourceTree = "<group>"; };
-		48D34B9C1A50941E0006C54B /* Transition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transition.m; sourceTree = "<group>"; };
-		48D34B9E1A509CF90006C54B /* UniqueIDModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniqueIDModelManager.h; sourceTree = "<group>"; };
-		48D34B9F1A509CF90006C54B /* UniqueIDModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniqueIDModelManager.m; sourceTree = "<group>"; };
 		48D34BA11A50A27D0006C54B /* StateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateView.h; sourceTree = "<group>"; };
 		48D34BA21A50A27D0006C54B /* StateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateView.m; sourceTree = "<group>"; };
 		48D527861A54A2CE00789B6F /* SMGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMGlobals.h; sourceTree = "<group>"; };
+		50A9F1CB1A54A6A400D3F06E /* StateToolDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateToolDrawer.h; sourceTree = "<group>"; };
+		50A9F1CC1A54A6A400D3F06E /* StateToolDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateToolDrawer.m; sourceTree = "<group>"; };
+		50A9F1CE1A54B50600D3F06E /* ColorPalletteCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalletteCollectionViewController.h; sourceTree = "<group>"; };
+		50A9F1CF1A54B50600D3F06E /* ColorPalletteCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalletteCollectionViewController.m; sourceTree = "<group>"; };
 		76DE1E87AC5C244340E626A7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F34E104BB239B02E5FDD31A1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA4912F80F94D8956276D693 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -115,11 +121,12 @@
 		481BFC791A519A0A001BA863 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				481BFC7A1A519A14001BA863 /* ComponentViews */,
 				489ADD451A54B7A900CB3096 /* SMBubbleMenuButton.h */,
 				489ADD461A54B7A900CB3096 /* SMBubbleMenuButton.m */,
 				486354B81A5609B7004731EA /* TextInputAlertView.h */,
 				486354B91A5609B7004731EA /* TextInputAlertView.m */,
+				50A9F1C71A54A2B200D3F06E /* Helper VIews */,
+				481BFC7A1A519A14001BA863 /* ComponentViews */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -140,8 +147,8 @@
 		481BFC7B1A519A21001BA863 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
-				48D34B9E1A509CF90006C54B /* UniqueIDModelManager.h */,
-				48D34B9F1A509CF90006C54B /* UniqueIDModelManager.m */,
+				4876D9F21A563B87004A4F61 /* UniqueIDModelManager.h */,
+				4876D9F31A563B87004A4F61 /* UniqueIDModelManager.m */,
 				4873CD0A1A55F70200777908 /* StateManager.h */,
 				4873CD0B1A55F70200777908 /* StateManager.m */,
 				4873CD0D1A55F71100777908 /* StateMachineManager.h */,
@@ -158,14 +165,14 @@
 		481BFC7C1A519A2B001BA863 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4876D9F61A563BD3004A4F61 /* State.h */,
+				4876D9F51A563BD3004A4F61 /* State.m */,
 				4873CD071A55F3D600777908 /* UniqueIDModel.h */,
 				4873CD081A55F3D600777908 /* UniqueIDModel.m */,
-				48D34B981A5093B60006C54B /* State.h */,
-				48D34B991A5093B60006C54B /* State.m */,
 				4873CD041A55F32200777908 /* StateMachine.h */,
 				4873CD051A55F32200777908 /* StateMachine.m */,
-				48D34B9B1A50941E0006C54B /* Transition.h */,
-				48D34B9C1A50941E0006C54B /* Transition.m */,
+				481AA81F1A563DD000206A26 /* Transition.h */,
+				481AA8201A563DD000206A26 /* Transition.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -223,7 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				48D34B731A5092550006C54B /* Info.plist */,
-				48D34B741A5092550006C54B /* main.m */,
+				4876D9F81A563BE6004A4F61 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -243,6 +250,17 @@
 				48D34B8D1A5092550006C54B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		50A9F1C71A54A2B200D3F06E /* Helper VIews */ = {
+			isa = PBXGroup;
+			children = (
+				50A9F1CB1A54A6A400D3F06E /* StateToolDrawer.h */,
+				50A9F1CC1A54A6A400D3F06E /* StateToolDrawer.m */,
+				50A9F1CE1A54B50600D3F06E /* ColorPalletteCollectionViewController.h */,
+				50A9F1CF1A54B50600D3F06E /* ColorPalletteCollectionViewController.m */,
+			);
+			name = "Helper VIews";
 			sourceTree = "<group>";
 		};
 		64CC30AD4AC4B0D8DA68BCF6 /* Frameworks */ = {
@@ -399,6 +417,7 @@
 			files = (
 				481BFC781A519988001BA863 /* StateMachineComponentView.m in Sources */,
 				48D34BA31A50A27D0006C54B /* StateView.m in Sources */,
+				481AA8211A563DD000206A26 /* Transition.m in Sources */,
 				481BFC6F1A518787001BA863 /* TransitionView.m in Sources */,
 				481BFC751A5192D7001BA863 /* StateObserver.m in Sources */,
 				48D34B7B1A5092550006C54B /* ViewController.m in Sources */,
@@ -407,14 +426,15 @@
 				4873CD061A55F32200777908 /* StateMachine.m in Sources */,
 				4873CCFF1A55EE6D00777908 /* SavedStateMachinesTableViewController.m in Sources */,
 				48D34B781A5092550006C54B /* AppDelegate.m in Sources */,
-				48D34BA01A509CF90006C54B /* UniqueIDModelManager.m in Sources */,
-				48D34B9D1A50941E0006C54B /* Transition.m in Sources */,
 				4873CD091A55F3D600777908 /* UniqueIDModel.m in Sources */,
+				4876D9F41A563B87004A4F61 /* UniqueIDModelManager.m in Sources */,
 				489ADD471A54B7A900CB3096 /* SMBubbleMenuButton.m in Sources */,
-				48D34B751A5092550006C54B /* main.m in Sources */,
-				48D34B9A1A5093B60006C54B /* State.m in Sources */,
 				4873CD031A55EEDD00777908 /* StateMachineArchiver.m in Sources */,
 				4873CD0F1A55F71100777908 /* StateMachineManager.m in Sources */,
+				50A9F1CD1A54A6A400D3F06E /* StateToolDrawer.m in Sources */,
+				4876D9F71A563BD3004A4F61 /* State.m in Sources */,
+				50A9F1D01A54B50600D3F06E /* ColorPalletteCollectionViewController.m in Sources */,
+				4876D9F91A563BE6004A4F61 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +560,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = StateMachineDrawer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -551,6 +572,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = StateMachineDrawer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

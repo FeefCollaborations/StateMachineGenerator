@@ -13,6 +13,7 @@
 #import "StateMachineManager.h"
 #import "TextInputAlertView.h"
 #import "StateMachine.h"
+#import "StateToolDrawer.h"
 
 #define UNSELECTED_STATE_COLOR [UIColor blackColor]
 #define SELECTED_STATE_COLOR [UIColor blueColor]
@@ -36,6 +37,7 @@ typedef enum {
 @property(nonatomic) StateEditOption currentStateEditOption;
 @property(nonatomic) SMBubbleMenuButton *bubbleMenuButton;
 @property(nonatomic) TextInputAlertView *saveStateMachineAlertView;
+@property(nonatomic)StateToolDrawer *toolBox;
 
 @end
 
@@ -60,6 +62,8 @@ typedef enum {
     [self.view addGestureRecognizer:lpgr];
     [self.view addGestureRecognizer:tgr];
     [self.view addGestureRecognizer:pgr];
+    
+    _toolBox = [[StateToolDrawer alloc] init];
     
 }
 
@@ -88,6 +92,16 @@ typedef enum {
 -(void)pressedDownOnStateView:(StateView*)stateView {
     
     self.pressedInsideState = YES;
+    
+    [_toolBox setSMState:self.selectedStateView.SMstate];
+    [_toolBox.view setFrame:CGRectMake(0, -40, [[UIScreen mainScreen] bounds].size.width, 45)];
+    [self.view addSubview:_toolBox.view];
+    [UIView animateWithDuration:1.0 animations:^{
+        [_toolBox.view setFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 45)];
+    } completion:^(BOOL finished) {
+        NSLog(@"toolbox animation completed");
+    }];
+    
     if([stateView isEqual:self.selectedStateView]) {
         
         self.panSelected = YES;

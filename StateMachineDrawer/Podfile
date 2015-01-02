@@ -1,3 +1,6 @@
 platform :ios, '8.0'
 pod 'DWBubbleMenuButton'
 pod 'SDCAlertView'
+pod 'HMSideMenu'
+pod 'Parse'
+pod 'WYPopoverController', '~> 0.2.0'

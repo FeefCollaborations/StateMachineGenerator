@@ -4,7 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-DWBubbleMenuButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-HMSideMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -24,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-WYPopoverController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>31225EAE40D9BA3B8EB5B0E4</key>
+		<key>1D1ED4760434B9A92B861C8D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>76205DF766F9DDCE147A6EF6</key>
+		<key>25247B1DBBA31196E0E237F9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7E5FE2402A259A6B3C04C960</key>
+		<key>357A705F49534F25391602D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CE72A6AE322B8F4B7CAF6F6E</key>
+		<key>564F381410A23F3125E89DAA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F7666F96420669A1A048B817</key>
+		<key>7D8345049CDD9E3E99440278</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>80FD0757AF16DC52947ABC3F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>93D49044F8B23C8E12724E23</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC8AB93BDB7581A43A153CAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D39AAEB510BBEC94336CC92C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

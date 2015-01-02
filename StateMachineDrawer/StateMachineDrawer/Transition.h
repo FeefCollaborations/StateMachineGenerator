@@ -19,7 +19,11 @@
 @property(nonatomic,readonly)State *fromState;
 @property(nonatomic,readonly)State *toState;
 @property(nonatomic,readonly)CGRect frame;
+@property(nonatomic,readonly)CGPoint fromPoint;
+@property(nonatomic,readonly)CGPoint toPoint;
 @property(nonatomic)NSString *title;
 @property(nonatomic)UIColor *color;
+
+-(BOOL)isRightArrow;
 
 @end
