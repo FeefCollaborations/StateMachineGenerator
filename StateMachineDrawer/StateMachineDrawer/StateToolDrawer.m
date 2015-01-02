@@ -8,6 +8,7 @@
 
 #import "StateToolDrawer.h"
 #import <WYPopoverController.h>
+#import "TextInputAlertView.h"
 
 @interface StateToolDrawer () <WYPopoverControllerDelegate>
 
@@ -32,7 +33,7 @@
     _recolorButton = [[UIBarButtonItem alloc] initWithTitle:@"Recolor" style:UIBarButtonItemStylePlain target:self action:@selector(recolorState)];
     UIBarButtonItem *changeTitleButton = [[UIBarButtonItem alloc] initWithTitle:@"Change Title" style:UIBarButtonItemStylePlain target:self action:@selector(changeTitle)];
     UIBarButtonItem *addTransitionButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Transition" style:UIBarButtonItemStylePlain target:self action:@selector(addTransition)];
-    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Transition" style:UIBarButtonItemStylePlain target:self action:@selector(deleteState)];
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete State" style:UIBarButtonItemStylePlain target:self action:@selector(deleteState)];
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     _toolBar.items = @[flex, _recolorButton, flex, changeTitleButton, flex, addTransitionButton, flex, deleteButton, flex];
     [self.view addSubview:_toolBar];
@@ -56,6 +57,20 @@
 
 -(void)changeTitle {
     NSLog(@"change title");
+    TextInputAlertView *alertView = [[TextInputAlertView alloc] initWithTitle:@"Change Title of Current State.." message:nil placeholderText:_SMState.title delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK"];
+    [alertView showWithDismissHandler:^(NSInteger buttonIndex) {
+        switch (buttonIndex) {
+            case 0:
+                //Do Nothing
+                break;
+            case 1:
+                [_SMState setTitle:[alertView textField].text];
+                break;
+                
+            default:
+                break;
+        }
+    }];
 }
 
 -(void)addTransition {
@@ -64,6 +79,26 @@
 
 -(void)deleteState {
     NSLog(@"delete state");
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting the state will delete all associated transitions as well..." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+    [alertView show];
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    switch (buttonIndex) {
+        case 0:
+            //Do Nothing
+            break;
+        case 1:
+            [_SMState deleteState];
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

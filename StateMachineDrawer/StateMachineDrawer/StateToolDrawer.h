@@ -10,7 +10,7 @@
 #import "State.h"
 #import "ColorPalletteCollectionViewController.h"
 
-@interface StateToolDrawer : UIViewController <ColorPalleteCollectionViewControllerDelegate>
+@interface StateToolDrawer : UIViewController <ColorPalleteCollectionViewControllerDelegate, UIAlertViewDelegate>
 
 @property(nonatomic)State *SMState;
 

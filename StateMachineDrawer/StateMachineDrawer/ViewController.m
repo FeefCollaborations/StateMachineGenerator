@@ -94,7 +94,7 @@ typedef enum {
     self.pressedInsideState = YES;
     
     [_toolBox setSMState:self.selectedStateView.SMstate];
-    [_toolBox.view setFrame:CGRectMake(0, -40, [[UIScreen mainScreen] bounds].size.width, 45)];
+    [_toolBox.view setFrame:CGRectMake(0, -60, [[UIScreen mainScreen] bounds].size.width, 45)];
     [self.view addSubview:_toolBox.view];
     [UIView animateWithDuration:1.0 animations:^{
         [_toolBox.view setFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 45)];
@@ -125,7 +125,7 @@ typedef enum {
         
         self.selectedStateView.SMstate.color = UNSELECTED_STATE_COLOR;
         self.selectedStateView = nil;
-        
+       
     }
     
 }
@@ -143,6 +143,16 @@ typedef enum {
     [self deselectSelectedStateView];
     
     [self updateForStateCompletion:tgr];
+    
+    //[_toolBox setSMState:self.selectedStateView.SMstate];
+    //[_toolBox.view setFrame:CGRectMake(0, -40, [[UIScreen mainScreen] bounds].size.width, 45)];
+    //[self.view addSubview:_toolBox.view];
+    [UIView animateWithDuration:1.0 animations:^{
+        [_toolBox.view setFrame:CGRectMake(0, -60, [[UIScreen mainScreen] bounds].size.width, 45)];
+    } completion:^(BOOL finished) {
+        NSLog(@"toolbox animation completed");
+        [_toolBox.view removeFromSuperview];
+    }];
     
 }
 

@@ -8,31 +8,76 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Pods-DWBubbleMenuButton.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>Pods-HMSideMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>Pods-Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Pods-RBBAnimation.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>Pods-SDCAlertView.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>Pods-SDCAutoLayout.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>Pods-WYPopoverController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1D1ED4760434B9A92B861C8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1D3AB0D0352619151D484A97</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>25247B1DBBA31196E0E237F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>357A705F49534F25391602D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,12 +87,42 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>564F381410A23F3125E89DAA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7D8345049CDD9E3E99440278</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>80FD0757AF16DC52947ABC3F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>93D49044F8B23C8E12724E23</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9ABD25469DE2EA1D2717B4C0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BC8AB93BDB7581A43A153CAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C129E817E1E5FBD08B688C60</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D39AAEB510BBEC94336CC92C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
