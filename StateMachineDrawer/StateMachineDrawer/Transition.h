@@ -24,5 +24,6 @@
 @property(nonatomic)UIColor *color;
 
 -(BOOL)isRightArrow;
+-(int)arrowDirection;
 
 @end

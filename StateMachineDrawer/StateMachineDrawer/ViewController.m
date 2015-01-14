@@ -29,7 +29,7 @@ typedef enum {
     
 } StateEditOption;
 
-@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate, SMBubbleMenuButtonDelegate, SDCAlertViewDelegate, SavedStateMachinesTableViewControllerDelegate>
+@interface ViewController () <UIGestureRecognizerDelegate, UIAlertViewDelegate, SMBubbleMenuButtonDelegate, SDCAlertViewDelegate, SavedStateMachinesTableViewControllerDelegate, StateToolDrawerDelegate>
 
 @property(nonatomic)StateView *selectedStateView;
 @property(nonatomic)StateMachine *stateMachine;
@@ -43,6 +43,8 @@ typedef enum {
 @property(nonatomic) TextInputAlertView *pdfExportAlertView;
 @property(nonatomic) UIAlertView *deleteStateMachineAlertView;
 @property(nonatomic)StateToolDrawer *toolBox;
+@property(nonatomic)NSMutableArray *trasitionViews;
+//Trying to add a StateManager to recall the States
 
 @end
 
@@ -69,6 +71,7 @@ typedef enum {
     [self.view addGestureRecognizer:pgr];
     
     _toolBox = [[StateToolDrawer alloc] init];
+    _toolBox.delegate = self;
     
 }
 
@@ -105,6 +108,26 @@ typedef enum {
     self.createdStatesCount++;
     [self.view addSubview:sv];
     [self.stateViews addObject:sv];
+    
+    if ([_toolBox isActive]) {
+        //Update the toolbox SMState
+        [_toolBox setSMState:state];
+    }
+    else {
+        
+        [_toolBox toggleActive];
+        [_toolBox setSMState:self.selectedStateView.SMstate];
+        [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 45)];
+        
+        [self.view addSubview:_toolBox.view];
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 45, [[UIScreen mainScreen] bounds].size.width, 45)];
+        } completion:^(BOOL finished) {
+            NSLog(@"toolbox animation completed");
+        }];
+    }
+    
     return sv;
     
 }
@@ -113,14 +136,34 @@ typedef enum {
     
     self.pressedInsideState = YES;
     
-    [_toolBox setSMState:self.selectedStateView.SMstate];
-    [_toolBox.view setFrame:CGRectMake(0, -60, [[UIScreen mainScreen] bounds].size.width, 45)];
-    [self.view addSubview:_toolBox.view];
-    [UIView animateWithDuration:1.0 animations:^{
-        [_toolBox.view setFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 45)];
-    } completion:^(BOOL finished) {
-        NSLog(@"toolbox animation completed");
-    }];
+    if ([_toolBox isActive]) {
+        //Update the selected state
+        if ([_toolBox isAddingTransition]) {
+            //Don't reset the toolbox's SMState
+        }
+        else
+            [_toolBox setSMState:stateView.SMstate];
+    }
+    else {
+        
+        [_toolBox toggleActive];
+        
+        if ([_toolBox isAddingTransition]) {
+            //Don't reset the toolbox's SMState
+        }
+        else
+            [_toolBox setSMState:self.selectedStateView.SMstate];
+        
+        [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 45)];
+        
+        [self.view addSubview:_toolBox.view];
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 45, [[UIScreen mainScreen] bounds].size.width, 45)];
+            } completion:^(BOOL finished) {
+                NSLog(@"toolbox animation completed");
+            }];
+    }
     
     if([stateView isEqual:self.selectedStateView]) {
         
@@ -167,12 +210,16 @@ typedef enum {
     //[_toolBox setSMState:self.selectedStateView.SMstate];
     //[_toolBox.view setFrame:CGRectMake(0, -40, [[UIScreen mainScreen] bounds].size.width, 45)];
     //[self.view addSubview:_toolBox.view];
-    [UIView animateWithDuration:1.0 animations:^{
-        [_toolBox.view setFrame:CGRectMake(0, -60, [[UIScreen mainScreen] bounds].size.width, 45)];
-    } completion:^(BOOL finished) {
-        NSLog(@"toolbox animation completed");
-        [_toolBox.view removeFromSuperview];
-    }];
+    if ([_toolBox isActive]) {
+        [_toolBox toggleActive];
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 45)];
+            } completion:^(BOOL finished) {
+                NSLog(@"toolbox animation completed");
+                [_toolBox.view removeFromSuperview];
+            }];
+    }
     
 }
 
@@ -372,6 +419,28 @@ typedef enum {
         
     }
     
+}
+
+#pragma mark - ToolBox Delegate Methods
+-(BOOL)isWaitingForTransitionToState {
+    if ([_selectedStateView.SMstate.id isEqualToString:_toolBox.SMState.id]) {
+        //Keep the while loop running
+        return true;
+    }
+    else {
+        _toolBox.transitionToState = _selectedStateView.SMstate;
+        //return false to break the loop
+        return false;
+    }
+}
+
+-(void)drawTransitionToView {
+    //Transition *newTransition = [[Transition alloc] initWithFromStateID:_toolBox.SMState.title toStateID:_toolBox.transitionToState.title];
+    Transition *newTransition = [_toolBox.SMState returnTransitionToState:_toolBox.transitionToState];
+    TransitionView *newTV = [[TransitionView alloc] init];
+    [newTV setTransition:newTransition];
+    [self.view addSubview:newTV];
+    [newTV updateView];
 }
 
 @end

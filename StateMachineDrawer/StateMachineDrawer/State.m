@@ -8,7 +8,6 @@
 
 #import "State.h"
 #import "StateManager.h"
-#import "Transition.h"
 #import "SMHelperFunctions.h"
 
 #define BOUNDARY_INSET 30
@@ -30,9 +29,11 @@
         _center = center;
         _title = self.id;
         _color = [UIColor blackColor];
+        _transitions = [[NSMutableDictionary alloc] init];
         [self updateFrame];
         
     }
+    [[StateManager sharedInstance] addModel:self];
     return self;
 }
 
@@ -41,7 +42,7 @@
     
     self.markedForDeletion = YES;
     
-    [[UniqueIDModelManager sharedInstance] removeModel:self];
+    [[StateManager sharedInstance] removeModel:self];
     
     for (Transition *transition in self.transitions.allValues) {
         
@@ -67,6 +68,14 @@
     Transition *transition = [[Transition alloc] initWithFromStateID:self.id toStateID:state.id];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recievedStateDeletionNotification:) name:STATE_DELETED_NOTIFICATION_KEY object:state];
     [self.transitions setObject:transition forKey:state.id];
+    
+}
+
+//read-only access to the transitions for id
+-(Transition*)returnTransitionToState:(State*)state
+{
+    
+    return (Transition*)[_transitions objectForKey:state.id];
     
 }
 

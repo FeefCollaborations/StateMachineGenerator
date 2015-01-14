@@ -17,6 +17,7 @@
 @implementation Transition
 
 bool isRightArrow;
+int arrowDirection;
 
 typedef enum {
     kTopOfRect,
@@ -24,6 +25,13 @@ typedef enum {
     kLeftOfRect,
     kRightOfRect
 }RectSide;
+
+typedef enum {
+    kLeftToRightUp = 1,
+    kLeftToRightDown,
+    kRightToLeftUp,
+    kRightToLeftDown
+}ArrowDirection;
 
 -(instancetype)initWithFromStateID:(NSString*)fStateID toStateID:(NSString*)tStateID {
 
@@ -33,6 +41,7 @@ typedef enum {
         _fromStateID = fStateID;
         _toStateID = tStateID;
         isRightArrow = true;
+        arrowDirection = 0;
         [self findEndPoints];
         
     }
@@ -111,9 +120,31 @@ typedef enum {
     int fromSide = 0;
     int toSide = 0;
     
-    if ([[StateManager sharedInstance] stateForID:self.fromStateID].center.x > [[StateManager sharedInstance] stateForID:self.toStateID].center.x) {
-        isRightArrow = false;
+    State *upState = [[StateManager sharedInstance] stateForID:self.fromStateID];
+    
+    if ([[StateManager sharedInstance] stateForID:self.fromStateID].center.x <= [[StateManager sharedInstance] stateForID:self.toStateID].center.x) {
+        
+        isRightArrow = true;
+        
+        if (([[StateManager sharedInstance] stateForID:self.fromStateID].center.y <= [[StateManager sharedInstance] stateForID:self.toStateID].center.y)) {
+            arrowDirection = kLeftToRightUp;
+        }
+        else {
+            arrowDirection = kRightToLeftUp;
+        }
     }
+    else {
+        
+        isRightArrow = false;
+        
+        if (([[StateManager sharedInstance] stateForID:self.fromStateID].center.y <= [[StateManager sharedInstance] stateForID:self.toStateID].center.y)) {
+            arrowDirection = kRightToLeftDown;
+        }
+        else {
+            arrowDirection = kRightToLeftUp;
+        }
+    }
+    
     
     //Check each side of the rect from each state
     // in no particular order for no particular reason other than
@@ -143,6 +174,23 @@ typedef enum {
     }
     else {
         _frame = CGRectMake(_toPoint.x, _toPoint.y, width, height);
+    }
+    switch (arrowDirection) {
+        case kLeftToRightUp:
+            _frame = CGRectMake(_fromPoint.x, _fromPoint.y, width, height);
+            break;
+        case kLeftToRightDown:
+            _frame = CGRectMake(_toPoint.x, _toPoint.y, width, height);
+            break;
+        case kRightToLeftUp:
+            _frame = CGRectMake(_fromPoint.x, _toPoint.y, width, height);
+            break;
+        case kRightToLeftDown:
+            _frame = CGRectMake(_toPoint.x, _fromPoint.y, width, height);
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -190,6 +238,10 @@ typedef enum {
     [aCoder encodeObject:_color forKey:COLOR_KEY];
 
     
+}
+
+-(int)arrowDirection {
+    return arrowDirection;
 }
 
 @end

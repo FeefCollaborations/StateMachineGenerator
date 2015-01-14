@@ -10,6 +10,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UniqueIDModel.h"
+#import "Transition.h"
 
 @protocol State <NSObject>
 @end
@@ -23,6 +24,7 @@
 -(void)setTitle:(NSString*)title; //rename a state, will also call updateFrame
 -(void)setColor:(UIColor*)color; //recolor a state
 -(void)setCenter:(CGPoint)center; //move a state
+-(Transition*)returnTransitionToState:(State*)state; //Getter method for the transitions
 
 @property(nonatomic, readonly) CGRect frame;
 @property(nonatomic) CGPoint center;

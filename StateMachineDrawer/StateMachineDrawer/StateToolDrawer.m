@@ -9,6 +9,7 @@
 #import "StateToolDrawer.h"
 #import <WYPopoverController.h>
 #import "TextInputAlertView.h"
+#import "TransitionView.h"
 
 @interface StateToolDrawer () <WYPopoverControllerDelegate>
 
@@ -21,10 +22,13 @@
 
 @implementation StateToolDrawer
 
+bool isActive = false;
+bool isAddingTransition = false;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 45);
+    self.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 45, [[UIScreen mainScreen] bounds].size.width, 45);
     //self.view.backgroundColor = [UIColor lightGrayColor];
     _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 30)];
     _toolBar.barTintColor = [UIColor whiteColor];
@@ -73,8 +77,19 @@
     }];
 }
 
+-(void)waitForStateSelection {
+    while ([self.delegate isWaitingForTransitionToState]) {
+        //Do nothing until state is changed
+    }
+    [_SMState addTransitionToState:_transitionToState];
+    [self.delegate drawTransitionToView];
+    isAddingTransition = false;
+}
+
 -(void)addTransition {
     NSLog(@"add transition");
+    isAddingTransition = true;
+    [self performSelectorInBackground:@selector(waitForStateSelection) withObject:nil];
 }
 
 -(void)deleteState {
@@ -146,6 +161,22 @@
             break;
     }
     [_wyPopoverController dismissPopoverAnimated:YES];
+}
+
+
+-(void)toggleActive
+{
+    isActive = !isActive;
+}
+
+-(BOOL)isActive
+{
+    return isActive;
+}
+
+-(BOOL)isAddingTransition
+{
+    return isAddingTransition;
 }
 
 /*

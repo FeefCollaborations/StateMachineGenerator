@@ -10,8 +10,24 @@
 #import "State.h"
 #import "ColorPalletteCollectionViewController.h"
 
+@class StateToolDrawer;
+
+@protocol StateToolDrawerDelegate <NSObject>
+
+-(BOOL)isWaitingForTransitionToState;
+-(void)drawTransitionToView;
+
+@end
+
 @interface StateToolDrawer : UIViewController <ColorPalleteCollectionViewControllerDelegate, UIAlertViewDelegate>
 
 @property(nonatomic)State *SMState;
+@property(nonatomic)State *transitionToState;
+
+@property(nonatomic,weak)id<StateToolDrawerDelegate> delegate;
+
+-(void)toggleActive;
+-(BOOL)isActive;
+-(BOOL)isAddingTransition;
 
 @end
