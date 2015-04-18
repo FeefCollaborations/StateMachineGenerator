@@ -73,6 +73,8 @@ typedef enum {
     _toolBox = [[StateToolDrawer alloc] init];
     _toolBox.delegate = self;
     
+    _trasitionViews = [[NSMutableArray alloc] init];
+    
 }
 
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -116,7 +118,7 @@ typedef enum {
     else {
         
         [_toolBox toggleActive];
-        [_toolBox setSMState:self.selectedStateView.SMstate];
+        [_toolBox setSMState:state];
         [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 45)];
         
         [self.view addSubview:_toolBox.view];
@@ -152,7 +154,7 @@ typedef enum {
             //Don't reset the toolbox's SMState
         }
         else
-            [_toolBox setSMState:self.selectedStateView.SMstate];
+            [_toolBox setSMState:stateView.SMstate];
         
         [_toolBox.view setFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 45)];
         
@@ -186,7 +188,8 @@ typedef enum {
     
     if(self.selectedStateView) {
         
-        self.selectedStateView.SMstate.color = UNSELECTED_STATE_COLOR;
+        //self.selectedStateView.SMstate.color = UNSELECTED_STATE_COLOR;
+        self.selectedStateView.SMstate.color = self.selectedStateView.SMstate.deselectColor;
         self.selectedStateView = nil;
        
     }
@@ -238,6 +241,9 @@ typedef enum {
 -(void)updateSelectedStateViewLocationFromGestureRecognizer:(UIGestureRecognizer*)gr {
     
     self.selectedStateView.SMstate.center = [gr locationInView:self.view];
+    for (TransitionView *tv in _trasitionViews) {
+        [tv updateView];
+    }
     
 }
 
@@ -260,6 +266,13 @@ typedef enum {
     if(!_stateViews)
         _stateViews = [[NSMutableArray alloc] init];
     return _stateViews;
+}
+
+-(NSMutableArray *)trasitionViews
+{
+    if(!_trasitionViews)
+        _trasitionViews = [[NSMutableArray alloc] init];
+    return _trasitionViews;
 }
 
 -(SMBubbleMenuButton *)bubbleMenuButton
@@ -441,6 +454,7 @@ typedef enum {
     [newTV setTransition:newTransition];
     [self.view addSubview:newTV];
     [newTV updateView];
+    [_trasitionViews addObject:newTV];
 }
 
 @end

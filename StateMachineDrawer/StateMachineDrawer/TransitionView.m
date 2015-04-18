@@ -43,32 +43,19 @@
  */
 
 -(void)updateView {
-    [self setNeedsDisplay];
+    if ([_transition isMarkedForUpdate]) {
+        self.frame = _transition.frame;
+        [self setNeedsDisplay];
+        [_transition toggleMarkForUpdate];
+    }
+    //[self setNeedsDisplay];
+    //[_transition toggleMarkForUpdate];
 }
 
 -(void)drawRect:(CGRect)rect {
     
     NSLog(@"transition view draw rect");
- /*
-    if ([_transition isRightArrow]) {
-        self.bezierPath = [UIBezierPath bezierPath];
-        [self.bezierPath moveToPoint:CGPointZero];
-        NSLog(@"bezier frame is %@, transition frame is %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.transition.frame));
-        [self.bezierPath addQuadCurveToPoint:CGPointMake(self.frame.size.width, self.frame.size.height)
-                                controlPoint:CGPointMake(self.frame.size.width, 0)];
-        //[self.strokeColor setStroke];
-        [self.bezierPath stroke];
-    }
-    else {
-        self.bezierPath = [UIBezierPath bezierPath];
-        [self.bezierPath moveToPoint:CGPointZero];
-        //NSLog(@"bezier frame is %@, transition frame is %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.transition.frame));
-        [self.bezierPath addQuadCurveToPoint:CGPointMake(self.frame.size.width, self.frame.size.height)
-                                controlPoint:CGPointMake(self.frame.size.width, 0)];
-        //[self.strokeColor setStroke];
-        [self.bezierPath stroke];
-    }
-  */
+ 
     CGPoint startPoint;
     CGPoint endPoint;
     CGPoint controlPoint;
@@ -101,7 +88,6 @@
     
     self.bezierPath = [UIBezierPath bezierPath];
     [self.bezierPath moveToPoint:startPoint];
-    //NSLog(@"bezier frame is %@, transition frame is %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.transition.frame));
     [self.bezierPath addQuadCurveToPoint:endPoint
                             controlPoint:controlPoint];
     //[self.strokeColor setStroke];

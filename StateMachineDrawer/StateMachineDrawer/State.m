@@ -29,6 +29,7 @@
         _center = center;
         _title = self.id;
         _color = [UIColor blackColor];
+        _deselectColor = [UIColor blackColor];
         _transitions = [[NSMutableDictionary alloc] init];
         [self updateFrame];
         
@@ -46,7 +47,7 @@
     
     for (Transition *transition in self.transitions.allValues) {
         
-        //[transition deleteTransition];
+        [transition deleteTransition];
         
     }
     
@@ -59,6 +60,11 @@
 -(void)updateFrame {
     
     self.frame = [self frameForTitle:self.title andCenter:self.center];
+    for (Transition *transition in self.transitions.allValues) {
+        //update frame
+        [transition updateTransitionFrame];
+        //[transition toggleMarkForUpdate];
+    }
     
 }
 
@@ -71,12 +77,22 @@
     
 }
 
+-(void)addTransitionFromState:(Transition*)transition toState:(State*)state {
+    
+    [self.transitions setObject:transition forKey:state.id];
+    
+}
+
 //read-only access to the transitions for id
 -(Transition*)returnTransitionToState:(State*)state
 {
     
     return (Transition*)[_transitions objectForKey:state.id];
     
+}
+
+-(NSMutableDictionary*)returnTransitions {
+    return _transitions;
 }
 
 //rename a state, will also call updateFrame
@@ -92,6 +108,11 @@
     
     _color = color;
     
+}
+
+//set color of state when deselected
+-(void)setDeselectColor:(UIColor *)color {
+    _deselectColor = color;
 }
 
 //move a state

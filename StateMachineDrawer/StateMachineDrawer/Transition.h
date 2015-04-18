@@ -14,6 +14,9 @@
 @interface Transition : NSObject <NSCoding>
 
 -(instancetype)initWithFromStateID:(NSString*)fStateID toStateID:(NSString*)tStateID;
+-(void)updateTransitionFrame;
+-(void)deleteTransition;
+-(void)toggleMarkForUpdate;
 
 @property(nonatomic,readonly)NSString *fromStateID;
 @property(nonatomic,readonly)NSString *toStateID;
@@ -25,5 +28,6 @@
 
 -(BOOL)isRightArrow;
 -(int)arrowDirection;
+-(BOOL)isMarkedForUpdate;
 
 @end

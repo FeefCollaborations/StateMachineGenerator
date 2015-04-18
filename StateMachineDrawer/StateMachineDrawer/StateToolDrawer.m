@@ -61,7 +61,7 @@ bool isAddingTransition = false;
 
 -(void)changeTitle {
     NSLog(@"change title");
-    TextInputAlertView *alertView = [[TextInputAlertView alloc] initWithTitle:@"Change Title of Current State.." message:nil placeholderText:_SMState.title delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK"];
+    TextInputAlertView *alertView = [[TextInputAlertView alloc] initWithTitle:@"Change Title of Current State.." message:nil placeholderText:_SMState.title delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK"];
     [alertView showWithDismissHandler:^(NSInteger buttonIndex) {
         switch (buttonIndex) {
             case 0:
@@ -96,22 +96,27 @@ bool isAddingTransition = false;
     NSLog(@"delete state");
 
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting the state will delete all associated transitions as well..." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+    alertView.tag = 0xff;
+    alertView.delegate = self;
     [alertView show];
     
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    switch (buttonIndex) {
-        case 0:
-            //Do Nothing
-            break;
-        case 1:
-            [_SMState deleteState];
-            break;
-            
-        default:
-            break;
+    // Check that the alert is for the delete.... JIC...
+    if (alertView.tag == 0xff) {
+        switch (buttonIndex) {
+            case 0:
+                //Do Nothing
+                break;
+            case 1:
+                [_SMState deleteState];
+                break;
+                
+            default:
+                break;
+        }
     }
     
 }
@@ -139,22 +144,22 @@ bool isAddingTransition = false;
 -(void)indexSelected:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
-            [_SMState setColor:[UIColor blackColor]];
+            [_SMState setDeselectColor:[UIColor blackColor]];
             break;
         case 1:
-            [_SMState setColor:[UIColor blueColor]];
+            [_SMState setDeselectColor:[UIColor blueColor]];
             break;
         case 2:
-            [_SMState setColor:[UIColor greenColor]];
+            [_SMState setDeselectColor:[UIColor greenColor]];
             break;
         case 3:
-            [_SMState setColor:[UIColor yellowColor]];
+            [_SMState setDeselectColor:[UIColor yellowColor]];
             break;
         case 4:
-            [_SMState setColor:[UIColor redColor]];
+            [_SMState setDeselectColor:[UIColor redColor]];
             break;
         case 5:
-            [_SMState setColor:[UIColor purpleColor]];
+            [_SMState setDeselectColor:[UIColor purpleColor]];
             break;
             
         default:

@@ -18,6 +18,7 @@
 
 bool isRightArrow;
 int arrowDirection;
+bool markForUpdate;
 
 typedef enum {
     kTopOfRect,
@@ -42,11 +43,28 @@ typedef enum {
         _toStateID = tStateID;
         isRightArrow = true;
         arrowDirection = 0;
+        markForUpdate = true;
         [self findEndPoints];
+        [[[StateManager sharedInstance] stateForID:tStateID] addTransitionFromState:self toState:[[StateManager sharedInstance] stateForID:fStateID]];
         
     }
     return self;
     
+}
+
+-(void)updateTransitionFrame {
+    [self findEndPoints];
+    markForUpdate = true;
+}
+
+-(void)deleteTransition {
+    _frame = CGRectZero;
+    _fromPoint = CGPointZero;
+    _toPoint = CGPointZero;
+    _fromStateID = nil;
+    _toStateID = nil;
+    _title = nil;
+    _color = nil;
 }
 
 -(float)distanceFromPoint:(CGPoint)from toPoint:(CGPoint)to {
@@ -242,6 +260,14 @@ typedef enum {
 
 -(int)arrowDirection {
     return arrowDirection;
+}
+
+-(void)toggleMarkForUpdate {
+    markForUpdate = !markForUpdate;
+}
+
+-(BOOL)isMarkedForUpdate {
+    return markForUpdate;
 }
 
 @end
